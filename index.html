@@ -43,65 +43,30 @@
       right: 10px; 
       z-index: 9999; 
     }
-   #terminal {
+ #terminal-container {
       width: 80%;
       margin: 20px auto;
       border: 1px solid #ccc;
+      background-color: inherit; /* Inherit background color */
+      color: inherit; /* Inherit text color */
+      display: none; /* Hide terminal by default */
+    }
+    #terminal {
       padding: 10px;
-      background-color: #f0f0f0;
-      color: #fff;
     }
     input[type="text"] {
       width: calc(100% - 20px);
       padding: 5px;
       margin-top: 10px;
       border: none;
-      background-color: #000;
-      color: #fff;
+      background-color: inherit; /* Inherit background color */
+      color: inherit; /* Inherit text color */
       font-family: monospace;
       outline: none;
     }
-  </style>
-</head>
-<body>
-  <!-- Code editor container -->
-  <textarea id="code-editor">
-  </textarea>
-  
-  <!-- Theme toggle button -->
-  <button onclick="toggleTheme()">Change Theme</button>
-  
-  <!-- Discord button -->
-  <button id="discord-button" onclick="goToDiscord()">Join Discord</button>
-  
-  <script>
-    var currentTheme = 0; // 0: White, 1: Dark
-    var themes = ['#ffffff', '#000000'];
-    
-    // Initialize CodeMirror with default theme
-    var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
-      mode: "javascript",
-      lineNumbers: true,
-      theme: "default" // Default theme
-    });
-
-    // Function to toggle theme
-    function toggleTheme() {
-      var body = document.body;
-      currentTheme = (currentTheme + 1) % themes.length;
-      body.style.backgroundColor = themes[currentTheme];
-    }
-
-    // Function to redirect to Discord server
-    function goToDiscord() {
-      window.location.href = "https://discord.gg/WbdmAkx8";
-    }
-  </script>
-<img src="https://raw.githubusercontent.com/ninjalandia/gitsite/logo.png" class="top-right-image" alt="Image">
-
-  <div id="terminal"></div>
-  <input type="text" id="commandInput" autofocus>
-  <script>
+</style>
+    <script>
+    const terminalContainer = document.getElementById("terminal-container");
     const terminal = document.getElementById("terminal");
     const commandInput = document.getElementById("commandInput");
     
@@ -124,6 +89,41 @@
           console.error('Error:', error);
         });
     }
+
+    function displayDeviceInfo() {
+      const deviceInfo = `Device Type: ${getDeviceType()}, Screen Size: ${getScreenSize()}`;
+      echo(deviceInfo);
+    }
+
+    function getDeviceType() {
+      const userAgent = navigator.userAgent;
+      if (/mobile/i.test(userAgent)) {
+        return 'Mobile';
+      } else if (/tablet/i.test(userAgent)) {
+        return 'Tablet';
+      } else {
+        return 'Desktop';
+      }
+    }
+
+    function getScreenSize() {
+      return `${window.innerWidth} x ${window.innerHeight}`;
+    }
+
+    function toggleTerminal() {
+      terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function displayHelp() {
+      const helpMessage = `
+        Available commands:
+        - echo "message": Displays the provided message.
+        - color #custom: Changes the text color to the specified custom color.
+        - rip: Displays your IP address.
+        - device: Displays your device information.
+        - help: Displays this help message.`;
+      echo(helpMessage);
+    }
     
     commandInput.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
@@ -137,6 +137,10 @@
           changeTextColor(color);
         } else if (command === "rip") {
           displayIP();
+        } else if (command === "device") {
+          displayDeviceInfo();
+        } else if (command === "help") {
+          displayHelp();
         } else {
           echo(`Command not recognized: ${command}`);
         }
