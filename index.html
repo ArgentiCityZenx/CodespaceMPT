@@ -174,9 +174,6 @@
           displayDeviceInfo();
         } else if (command === "help") {
           displayHelp();
-        } else if (command.startsWith("open ")) {
-          const url = command.substring(5).trim();
-          window.open(url, '_blank');
         } else {
           echo(`Command not recognized: ${command}`);
         }
