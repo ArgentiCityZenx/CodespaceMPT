@@ -43,6 +43,24 @@
       right: 10px; 
       z-index: 9999; 
     }
+   #terminal {
+      width: 80%;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #000;
+      color: #fff;
+    }
+    input[type="text"] {
+      width: calc(100% - 20px);
+      padding: 5px;
+      margin-top: 10px;
+      border: none;
+      background-color: #000;
+      color: #fff;
+      font-family: monospace;
+      outline: none;
+    }
   </style>
 </head>
 <body>
@@ -80,7 +98,52 @@
     }
   </script>
 <img src="https://raw.githubusercontent.com/ninjalandia/gitsite/logo.png" class="top-right-image" alt="Image">
-</body>
+
+  <div id="terminal"></div>
+  <input type="text" id="commandInput" autofocus>
+  <script>
+    const terminal = document.getElementById("terminal");
+    const commandInput = document.getElementById("commandInput");
+    
+    function echo(message) {
+      terminal.innerHTML += `<div>${message}</div>`;
+    }
+    
+    function changeTextColor(color) {
+      terminal.style.color = color;
+    }
+    
+    function displayIP() {
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          echo(`Your IP address: ${data.ip}`);
+        })
+        .catch(error => {
+          echo('Unable to retrieve IP address.');
+          console.error('Error:', error);
+        });
+    }
+    
+    commandInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const command = commandInput.value.trim().toLowerCase();
+        if (command.startsWith("echo")) {
+          const message = command.substring(5).trim();
+          echo(message);
+        } else if (command.startsWith("color")) {
+          const color = command.substring(6).trim();
+          changeTextColor(color);
+        } else if (command === "rip") {
+          displayIP();
+        } else {
+          echo(`Command not recognized: ${command}`);
+        }
+        commandInput.value = "";
+      }
+    });
+  </script>
 </body>
 </html>
 
