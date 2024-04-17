@@ -76,12 +76,12 @@
   </style>
 </head>
 <body>
-  <button id="toggleTerminalButton">Toggle Terminal</button>
+  <button id="toggleTerminalButton">Terminal Mode</button>
   <div id="terminal-container">
     <div id="terminal"></div>
     <input type="text" id="commandInput" autofocus>
   </div>
-  <button id="discord-button" onclick="window.location.href='https://discord.gg/WbdmAkx8'">Join our Discord Server</button>
+  <button id="discord-button" onclick="window.location.href='https://discord.gg/WbdmAkx8'">Discord Server</button>
   <button id="theme-button" onclick="toggleTheme()">Toggle Theme</button>
   <textarea id="code-editor"></textarea>
   
@@ -138,10 +138,11 @@
         - color #custom: Changes the text color to the specified custom color.
         - rip: Displays your IP address.
         - device: Displays your device information.
-        - help: Displays this help message.`;
+        - help: Displays this very help message.
+        - open: opens any link`;
       echo(helpMessage);
     }
-
+function 
     function toggleTheme() {
       const body = document.body;
       const currentTheme = body.style.backgroundColor;
@@ -154,7 +155,7 @@
       }
     }
 
-    toggleTerminalButton.addEventListener("click", function() {
+    terminalModebutton.addEventListener("click", function() {
       terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
     });
 
@@ -174,8 +175,11 @@
           displayDeviceInfo();
         } else if (command === "help") {
           displayHelp();
+        } else if (command.startsWith("open ")) {
+          const url = command.substring(5).trim();
+          window.open(url, '_blank');
         } else {
-          echo(`Command not recognized: ${command}`);
+          echo(`Command not recognized: ${command}. Use command "help" for a list of commands`);
         }
         commandInput.value = "";
       }
