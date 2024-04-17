@@ -73,6 +73,9 @@
       font-family: sans-serif;
       outline: none;
     }
+     #hidden-textarea {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -84,13 +87,22 @@
   <button id="discord-button" onclick="window.location.href='https://discord.gg/WbdmAkx8'">Discord Server</button>
   <button id="theme-button" onclick="toggleTheme()">Toggle Theme</button>
   <textarea id="code-editor"></textarea>
+   <button id="copy-button" onclick="copyToHiddenTextarea()">Copy Code</button>
+  <textarea id="code-editor"></textarea>
+  <textarea id="hidden-textarea"></textarea>
   
   <script>
     const terminalContainer = document.getElementById("terminal-container");
     const terminal = document.getElementById("terminal");
     const commandInput = document.getElementById("commandInput");
     const toggleTerminalButton = document.getElementById("toggleTerminalButton");
-
+    const copyButton = document.getElementById("copy-button");
+    const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+      lineNumbers: true,
+      mode: "javascript"
+    });
+    
+    const hiddenTextarea = document.getElementById("hidden-textarea");
     function echo(message) {
       terminal.innerHTML += `<div>${message}</div>`;
     }
@@ -159,6 +171,12 @@ function
       terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
     });
 
+    function copyToHiddenTextarea() {
+      const code = codeEditor.getValue();
+      hiddenTextarea.value = code;
+      hiddenTextarea.select();
+      document.execCommand("copy");
+      
     commandInput.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -185,6 +203,26 @@ function
       }
     });
 
+      function copyToHiddenTextarea() {
+      const code = codeEditor.getValue();
+      hiddenTextarea.value = code;
+      hiddenTextarea.select();
+      document.execCommand("copy");
+    }
+        function saveToFile(content) {
+      if (content.trim() !== "") {
+        const blob = new Blob([content], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "code.txt";
+        document.body.appendChild(a);
+        a.click();
+        URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        echo("Code saved as code.txt");
+      }
+  }
     // Initialize CodeMirror with line numbers
     const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
       lineNumbers: true,
