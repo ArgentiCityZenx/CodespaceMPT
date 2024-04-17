@@ -180,6 +180,12 @@
         commandInput.value = "";
       }
     });
+
+    // Initialize CodeMirror with line numbers
+    const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+      lineNumbers: true,
+      mode: "javascript"
+    });
   </script>
 </body>
 </html>
