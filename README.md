@@ -4,12 +4,6 @@ We first used ChatGPT to write us a simple coding site. Then, we fixed some issu
 Next, we added our logo and we still have things to do. They include:
 
 * Add a mascot and a new name
-* Make it so that it changes between dark mode and light mode depending on the devices settings
-* Add a terminal that works
+* Add a terminal that works √
 * Make it so that you can save your code
-* Make an option to save code to GitHub as a repo
 
-## What kinds of commands will the terminal use?
-
-We will add a terminal which just simply echoes anything it says using `echo "Hello World`. It will also change color using `color #custom` and say what your IP is using `rip`
-(Don't hunt us down government)
