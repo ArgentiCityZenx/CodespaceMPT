@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<head></head>
-<body>
-<html lang="en"
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code Ninja</title>
@@ -38,16 +37,16 @@
     }
     .top-right-image {
       position: absolute;
-      top: 10px; 
-      right: 10px; 
-      z-index: 9999; 
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
     }
- #terminal-container {
+    #terminal-container {
       width: 80%;
       margin: 20px auto;
       border: 1px solid #ccc;
-      background-color: #000; 
-      color: #fff; 
+      background-color: #000;
+      color: #fff;
     }
     #terminal {
       padding: 10px;
@@ -58,16 +57,24 @@
       margin-top: 10px;
       border: none;
       background-color: inherit;
-      color: inherit; 
+      color: inherit;
       font-family: sans-serif;
       outline: none;
     }
-</style>
-    
+  </style>
+</head>
+<body>
+  <button id="toggleTerminalButton">Toggle Terminal</button>
+  <div id="terminal-container">
+    <div id="terminal"></div>
+    <input type="text" id="commandInput" autofocus>
+  </div>
+  
   <script>
     const terminalContainer = document.getElementById("terminal-container");
     const terminal = document.getElementById("terminal");
     const commandInput = document.getElementById("commandInput");
+    const toggleTerminalButton = document.getElementById("toggleTerminalButton");
     
     function echo(message) {
       terminal.innerHTML += `<div>${message}</div>`;
@@ -120,6 +127,10 @@
       echo(helpMessage);
     }
     
+    toggleTerminalButton.addEventListener("click", function() {
+      terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
+    });
+    
     commandInput.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -143,7 +154,5 @@
       }
     });
   </script>
-
-
-</html>
 </body>
+</html>
