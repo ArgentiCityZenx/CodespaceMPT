@@ -73,27 +73,24 @@
       font-family: sans-serif;
       outline: none;
     }
-
   </style>
 </head>
 <body>
-  <button id="toggleTerminalButton">Terminal Mode</button>
+  <button id="toggleTerminalButton">Toggle Terminal</button>
   <div id="terminal-container">
     <div id="terminal"></div>
     <input type="text" id="commandInput" autofocus>
   </div>
-  <button id="discord-button" onclick="window.location.href='https://discord.gg/WbdmAkx8'">Discord Server</button>
+  <button id="discord-button" onclick="window.location.href='https://discord.gg/WbdmAkx8'">Join our Discord Server</button>
   <button id="theme-button" onclick="toggleTheme()">Toggle Theme</button>
   <textarea id="code-editor"></textarea>
+  
   <script>
     const terminalContainer = document.getElementById("terminal-container");
     const terminal = document.getElementById("terminal");
     const commandInput = document.getElementById("commandInput");
     const toggleTerminalButton = document.getElementById("toggleTerminalButton");
-      lineNumbers: true,
-      mode: "javascript"
-    });
-    
+
     function echo(message) {
       terminal.innerHTML += `<div>${message}</div>`;
     }
@@ -141,11 +138,10 @@
         - color #custom: Changes the text color to the specified custom color.
         - rip: Displays your IP address.
         - device: Displays your device information.
-        - help: Displays this very help message.
-        - open: opens any link`;
+        - help: Displays this help message.`;
       echo(helpMessage);
     }
-function 
+
     function toggleTheme() {
       const body = document.body;
       const currentTheme = body.style.backgroundColor;
@@ -158,12 +154,10 @@ function
       }
     }
 
-    terminalModebutton.addEventListener("click", function() {
+    toggleTerminalButton.addEventListener("click", function() {
       terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
     });
 
-
-      
     commandInput.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -184,7 +178,7 @@ function
           const url = command.substring(5).trim();
           window.open(url, '_blank');
         } else {
-          echo(`Command not recognized: ${command}. Use command "help" for a list of commands`);
+          echo(`Command not recognized: ${command}`);
         }
         commandInput.value = "";
       }
