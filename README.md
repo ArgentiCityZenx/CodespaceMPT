@@ -11,5 +11,5 @@ Next, we added our logo and we still have things to do. They include:
 
 ## What kinds of commands will the terminal use?
 
-We will add a terminal which just simply echoes anything it says using `echo "Hello World`. It will also change color using `color #custom` and say what your IP is using `ipDevice`
+We will add a terminal which just simply echoes anything it says using `echo "Hello World`. It will also change color using `color #custom` and say what your IP is using `rip`
 (Don't hunt us down government)
