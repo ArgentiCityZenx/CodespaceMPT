@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Ninja</title>
+  <!-- Include CodeMirror CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+  <!-- Include CodeMirror JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+  <!-- Include appropriate CodeMirror mode (e.g., JavaScript) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/javascript/javascript.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+    #code-editor {
+      width: 80%;
+      height: 60vh;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+    }
+    #discord-button {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #7289da;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    #discord-button:hover {
+      background-color: #5f73bc;
+    }
+  </style>
+</head>
+<body>
+  <!-- Code editor container -->
+  <textarea id="code-editor">
+  </textarea>
+  
+  <!-- Theme toggle button -->
+  <button onclick="toggleTheme()">Change Theme</button>
+  
+  <!-- Discord button -->
+  <button id="discord-button" onclick="goToDiscord()">Join Discord</button>
+  
+  <script>
+    var currentTheme = 0; // 0: White, 1: Dark
+    var themes = ['#ffffff', '#000000'];
+    
+    // Initialize CodeMirror with default theme
+    var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+      mode: "javascript",
+      lineNumbers: true,
+      theme: "default" // Default theme
+    });
+
+    // Function to toggle theme
+    function toggleTheme() {
+      var body = document.body;
+      currentTheme = (currentTheme + 1) % themes.length;
+      body.style.backgroundColor = themes[currentTheme];
+    }
+
+    // Function to redirect to Discord server
+    function goToDiscord() {
+      window.location.href = "https://discord.gg/WbdmAkx8";
+    }
+  </script>
+</body>
+</html>
+
+</head>
