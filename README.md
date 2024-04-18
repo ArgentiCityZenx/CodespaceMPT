@@ -23,3 +23,6 @@ It works with a few commands.
 
 We made an easter egg for you to find out!
 
+### Why make a coding site?
+
+The other day, I was bored and decided to make a "simple" site, which turned into a mini GitHub in GitHub pages...
