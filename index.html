@@ -13,7 +13,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #ffffff;
+      background-color: #000000;
       margin: 0;
       padding: 0;
     }
@@ -76,7 +76,8 @@
   </style>
 </head>
 <body>
-  <button id="toggleTerminalButton">Toggle Terminal</button>
+  
+    <img src="https://github.com/ninjalandia/gitsite/blob/main/Terminal.png" alt=">_" width="10"><button id="toggleTerminalButton">Toggle Terminal</button>
   <div id="terminal-container">
     <div id="terminal"></div>
     <input type="text" id="commandInput" autofocus>
@@ -88,7 +89,7 @@
   <div class="top-right-image">
     <img src="https://github.com/ninjalandia/gitsite/raw/main/logo.png" alt="Ninjalandia Logo" width="50">
   </div>
-  <h6>Ninjalandia</h6>
+  
   
   <script>
     const terminalContainer = document.getElementById("terminal-container");
@@ -112,7 +113,7 @@
           echo(`Your IP address: ${data.ip}`);
         })
         .catch(error => {
-          echo('Unable to retrieve IP address.');
+          echo('Unable to retrieve IP address. You are the real definition of stealth!');
           console.error('Error:', error);
         });
     }
@@ -144,14 +145,20 @@
         - color #custom: Changes the text color to the specified custom color.
         - rip: Displays your IP address.
         - device: Displays your device information.
-        - help: Displays this help message.`;
+        - help: Displays this very help message.`;
       echo(helpMessage);
     }
-  
+   function displayPorn() {
+     const pornImages `
+     Are you a fucking creep?!
+     This is a coding site not a porn site!!
+     `
+     echo(pornImages);
+   }
     function toggleTheme() {
       const body = document.body;
       const currentTheme = body.style.backgroundColor;
-      if (currentTheme === "rgb(255, 255, 255)" || currentTheme === "#ffffff") {
+      if (currentTheme === "rgb(255, 255, 255)" || currentTheme === "#000000") {
         body.style.backgroundColor = "#000000";
         body.style.color = "#ffffff";
       } else {
@@ -160,6 +167,7 @@
       }
     }
 
+    
     toggleTerminalButton.addEventListener("click", function() {
       terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
     });
@@ -180,8 +188,10 @@
           displayDeviceInfo();
         } else if (command === "help") {
           displayHelp();
+        } else if (command === "porn")
+          displayPorn();
         } else {
-          echo(`Command not recognized: ${command}`);
+          echo(`Command not recognized: ${command}. Use command "help" for help on commands`);
         }
         commandInput.value = "";
       }
