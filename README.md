@@ -3,7 +3,7 @@
 We first used ChatGPT to write us a simple coding site. Then, we fixed some issues in the code since ChatGPT made it difficult to make a coding site.
 Next, we added our logo and we still have things to do. They include:
 
-* Add a mascot and a new name
-* Add a terminal that works √
-* Make it so that you can save your code
-
+* Add a mascot and a new name (easy)
+* Add a terminal that works √ (easy)
+* Make it so that you can save your code (hard)
+* Add an option to make a website using your code (hard)
