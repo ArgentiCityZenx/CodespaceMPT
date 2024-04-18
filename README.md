@@ -7,3 +7,16 @@ Next, we added our logo and we still have things to do. They include:
 * Add a terminal that works √ (easy)
 * Make it so that you can save your code (hard)
 * Add an option to make a website using your code (hard)
+
+## How does the terminal work?
+
+It works with a few commands. 
+
+| Terminal cmd | What it does           |
+|  ----------- | ---------------------- |
+| echo message | repeats message        |
+| rip          | gets ip address        |
+| help         | shows the list of cmds |
+| color #custom| custom color for txt >_|
+| device       | displays device info   |
+
