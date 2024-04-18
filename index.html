@@ -63,34 +63,38 @@
     #terminal {
       padding: 10px;
     }
-    input[type="text"] {
-      width: calc(100% - 20px);
-      padding: 5px;
-      margin-top: 10px;
-      border: none;
-      background-color: inherit;
-      color: inherit;
-      font-family: sans-serif;
-      outline: none;
-    }
-    #inputBox {
+    
+    .container {
         width: 80%;
         margin: 20px auto;
+    }
+    textarea {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 10px;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         resize: vertical;
     }
-    #fileNameInput {
-        margin-top: 10px;
-        background-color: #000000;
-        font-family: sans-serif;
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
     }
-    #saveButton {
-        display: block;
-        margin: 10px auto;
-        padding: 8px 20px;
-        background-color: #4CAF50;
+    select {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #048A81;
         color: white;
         border: none;
         border-radius: 5px;
@@ -115,10 +119,15 @@
   </div>
       <h1>How to save code?</h1>
   <p>You can save your code by copying it and pasting it in the box below then naming it to whatever you want.</p>
-      <textarea id="inputBox" rows="10" placeholder=></textarea>
-<input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
-<button id="saveButton" onclick="saveText()">Save as .txt</button>
-
+  <div class="container">
+    <textarea id="inputBox" placeholder="Type your text here..."></textarea>
+    <input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
+    <select id="fileType">
+        <option value="txt">Text File (.txt)</option>
+        <option value="md">Markdown File (.md)</option>
+        <!-- Add more file types here if needed -->
+    </select>
+    <button onclick="saveText()">Save</button>
 
   
   <script>
@@ -130,6 +139,7 @@
 function saveText() {
     var textToSave = document.getElementById("inputBox").value;
     var fileName = document.getElementById("fileNameInput").value;
+    var fileType = document.getElementById("fileType").value;
     
     if (fileName.trim() === "") {
         alert("Please enter a file name.");
@@ -137,8 +147,16 @@ function saveText() {
     }
     
     var blob = new Blob([textToSave], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, fileName + ".txt");
+    saveAs(blob, fileName + "." + fileType);
 }
+
+function saveAs(blob, fileName) {
+    var link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+}
+
 
 function saveAs(blob, fileName) {
     var link = document.createElement("a");
