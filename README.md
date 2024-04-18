@@ -5,8 +5,9 @@ Next, we added our logo and we still have things to do. They include:
 
 * Add a mascot and a new name (easy)
 * Add a terminal that works √ (easy)
-* Make it so that you can save your code (hard)
-* Add an option to make a website using your code (hard)
+* Make it so that you can save your code √ (hard)
+* Add an option to select what kind of file you want to make it as (medium)
+
 
 ## How does the terminal work?
 
