@@ -20,3 +20,5 @@ It works with a few commands.
 | color #custom| custom color for txt >_|
 | device       | displays device info   |
 
+We made an easter egg for you to find out!
+
