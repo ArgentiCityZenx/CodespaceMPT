@@ -77,7 +77,7 @@
 </head>
 <body>
   
-    <img src="https://github.com/ninjalandia/gitsite/blob/main/Terminal.png" alt=">_" width="10"><button id="toggleTerminalButton">Toggle Terminal</button>
+<button id="toggleTerminalButton">Toggle Terminal</button>
   <div id="terminal-container">
     <div id="terminal"></div>
     <input type="text" id="commandInput" autofocus>
@@ -148,13 +148,7 @@
         - help: Displays this very help message.`;
       echo(helpMessage);
     }
-   function displayPorn() {
-     const pornImages `
-     Are you a fucking creep?!
-     This is a coding site not a porn site!!
-     `
-     echo(pornImages);
-   }
+    
     function toggleTheme() {
       const body = document.body;
       const currentTheme = body.style.backgroundColor;
@@ -187,9 +181,7 @@
         } else if (command === "device") {
           displayDeviceInfo();
         } else if (command === "help") {
-          displayHelp();
-        } else if (command === "porn")
-          displayPorn();
+          displayHelp()
         } else {
           echo(`Command not recognized: ${command}. Use command "help" for help on commands`);
         }
