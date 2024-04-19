@@ -1,13 +1,17 @@
 # We have made a new coding site. And here is how we did it.
 
 We first used ChatGPT to write us a simple coding site. Then, we fixed some issues in the code since ChatGPT made it difficult to make a coding site.
-Next, we added our logo and we still have things to do. They include:
+Next, we added our logo and we finished! This is our former list:
 
-* Add a mascot and a new name (easy)
+* Add a mascot and a new name √ (easy)
 * Add a terminal that works √ (easy)
 * Make it so that you can save your code √ (hard)
 * Add an option to select what kind of file you want to make it as √ (medium)
 
+And this is ours now!
+
+* Add an AI helper
+* Add git, nvm, and npm cmds
 
 ## How does the terminal work?
 
