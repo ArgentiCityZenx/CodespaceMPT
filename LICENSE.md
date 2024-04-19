@@ -1,0 +1,1 @@
+This is not copyrighted. However, distributing this site without permission will be penalized by contacting GitHub or going to court if it is serious. 
