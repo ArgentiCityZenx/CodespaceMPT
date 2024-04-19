@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitMPT</title>
+  <title>CodespaceMPT</title>
   <!-- Include CodeMirror CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
   <!-- Include CodeMirror JavaScript -->
@@ -112,8 +112,9 @@
   </style>
 </head>
 <body>
-<h1>Start Writing Code</h1>
-  <h6>Terminal Mode</h6>
+<h1>Homepage</h1>
+
+  <h6>Start writing code</h6>
 <button id="toggleTerminalButton">Terminal</button>
   <div id="terminal-container">
     <div id="terminal"></div>
@@ -121,16 +122,7 @@
   </div>
   <button id="discord-button" onclick="window.location.href='https://discord.gg/WbdmAkx8'">Join our Discord Server</button>
   <button id="theme-button" onclick="toggleTheme()">Toggle Theme</button>
-  <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
-<script>
-  function createNewRepo() {
-    // Replace this URL with the URL of GitHub's new repository creation page
-    const githubNewRepoUrl = 'https://github.com/new';
-
-    // Open the URL in a new tab
-    window.open(githubNewRepoUrl, '_blank');
-  }
-</script>
+  
 
   <textarea id="code-editor"></textarea>
   <div class="top-right-image">
@@ -279,6 +271,17 @@ function saveAs(blob, fileName) {
       mode: "javascript"
     });
   </script>
+<h6>Use GitHub</h6>
+<p>Who said that we have rivalry with GitHub? Matter of fact, we used GitHub pages for this very site!</p>
+ <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
+<script>
+  function createNewRepo() {
+    // Replace this URL with the URL of GitHub's new repository creation page
+    const githubNewRepoUrl = 'https://github.com/new';
 
+    // Open the URL in a new tab
+    window.open(githubNewRepoUrl, '_blank');
+  }
+</script>
 </body>
 </html>
