@@ -1,1 +1,0 @@
-This is not copyrighted. However, distributing this site without permission will be penalized by contacting GitHub or going to court if it is serious. I, Ninjalandia, am unemployed and technically don't own GitMPT. HOWEVER! Forking this repository without permission is penalized. If you want to contribute, make a pull request.
