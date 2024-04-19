@@ -1,5 +1,4 @@
 
-[GitMPT](ninjalandia.github.io/GitMPT)
 
 # We have made a new coding site. And here is how we did it.
 
