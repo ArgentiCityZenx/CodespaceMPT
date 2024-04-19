@@ -13,7 +13,7 @@ Next, we added our logo and we finished! This is our former list:
 And this is ours now!
 
 * Add an AI helper (hard)
-* Add an option to add as a repo in GitHub (also very hard)
+* Add an option to add a repo in GitHub √ (easy)
 * Add a new logo (easy)
 * Rework layout (medium) 
 
