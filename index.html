@@ -116,7 +116,6 @@
    
   <textarea id="code-editor"></textarea>
   <div class="top-right-image">
-    <img src="https://github.com/ninjalandia/GitMPT/raw/main/logo-git.png" alt="Ninjalandia Logo" width="50">
   </div>
       
   <div class="container">
@@ -125,7 +124,7 @@
     <select id="fileType">
         <option value="txt">Text File (.txt)</option>
         <option value="md">Markdown File (.md)</option>
-        <!-- Add more file types here if needed -->
+        <option value="pdf">Portable Document Format (.pdf)</option>
     </select>
     <button onclick="saveText()">Save</button>
 
@@ -145,7 +144,11 @@ function saveText() {
         alert("Please enter a file name.");
         return;
     }
-    
+ if (fileName.trim() === " ") {
+        alert("Come on, don't be lazy, bro.");
+        return;
+    }
+  
     var blob = new Blob([textToSave], {type: "text/plain;charset=utf-8"});
     saveAs(blob, fileName + "." + fileType);
 }
@@ -189,7 +192,7 @@ function saveAs(blob, fileName) {
       const deviceInfo = `Device Type: ${getDeviceType()}, Screen Size: ${getScreenSize()}`;
       echo(deviceInfo);
     }
-
+    
     function getDeviceType() {
       const userAgent = navigator.userAgent;
       if (/mobile/i.test(userAgent)) {
