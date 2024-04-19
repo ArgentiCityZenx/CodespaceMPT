@@ -14,7 +14,6 @@ Next, we added our logo and we finished! This is our former list:
 And this is ours now!
 
 * Add an AI helper (hard)
-* Add git, nvm, and npm cmds (very hard) 
 * Add an option to add as a repo in GitHub (also very hard)
 * Add a new logo (easy)
 * Rework layout (medium) 
