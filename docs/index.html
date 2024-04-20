@@ -129,6 +129,15 @@
       border: none;
       border-radius: 4px;
     }
+      #save {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #e4b62c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
@@ -156,7 +165,7 @@
         <option value="md">Markdown File (.md)</option>
         
     </select>
-    <button onclick="saveText()">Save File</button>
+    <button id="save" onclick="saveText()">Save File</button>
 
   
   <script>
@@ -304,7 +313,7 @@ function saveAs(blob, fileName) {
   }
 </script>
   
-  <button id="vscode" onclick="openVscode()">Open VSCode</button>
+  <button id="vscode" onclick="openVscode()">Open VS Code</button>
 
 <script>
   function openVscode() {
@@ -329,8 +338,8 @@ function saveAs(blob, fileName) {
 </script>
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file, 
-  and make a new repository in GitHub. It also has a built-in terminal with several commands and an easter egg.</p>
-<p>Each day this site gets a new update. Join our Discord for updates!</p>
+  and make a new repository in GitHub. It also has a built-in terminal with several commands and an easter egg. 
+  We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
 <p> This is version 1.10.1 </p>
 </body>
 </html>
