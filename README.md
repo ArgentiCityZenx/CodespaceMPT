@@ -15,7 +15,7 @@ And this is ours now!
 * Add an AI helper (hard)
 * Add an option to add a repo in GitHub √ (easy)
 * Add a new logo √ (easy)
-* Rework layout (medium) 
+* Rework layout √ (medium) 
 
 ## How does the terminal work?
 
