@@ -120,6 +120,15 @@
       border: none;
       border-radius: 4px;
     }
+      #websitetester {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #7dab6a;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
@@ -283,7 +292,7 @@ function saveAs(blob, fileName) {
     });
   </script>
 <h4>Use GitHub and other coding platforms</h4>
-<p>Who said that we have rivalry with GitHub and others? Matter of fact, we used GitHub pages and VS Code for this very site!</p>
+<p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
  <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
 <script>
   function createNewRepo() {
@@ -307,11 +316,21 @@ function saveAs(blob, fileName) {
   }
 </script>
 
-  
+  <button id="websitetester" onclick="openTester()">Website Tester we Used</button>
+
+<script>
+  function openTester() {
+    // Replace this URL with the URL of VSCode online
+    const testerUrl = 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_make_a_website_intro';
+
+    // Open the URL in a new tab
+    window.open(testerUrl, '_blank');
+  }
+</script>
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file, 
   and make a new repository in GitHub. It also has a built-in terminal with several commands and an easter egg.</p>
 <p>Each day this site gets a new update. Join our Discord for updates!</p>
-<p> This is version 1.10.0 </p>
+<p> This is version 1.10.1 </p>
 </body>
 </html>
