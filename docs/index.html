@@ -250,7 +250,8 @@ function saveAs(blob, fileName) {
         - color #custom: Changes the text color to the specified custom color.
         - rip: Displays your IP address.
         - device: Displays your device information.
-        - help: Displays this very help message.`;
+        - help: Displays this very help message.
+        - open "site.com": Opens that site`;
       echo(helpMessage);
     }
     
@@ -287,6 +288,9 @@ function saveAs(blob, fileName) {
           displayDeviceInfo();
         } else if (command === "help") {
           displayHelp()
+         } else if (command.startsWith("open")) {
+      const url = command.substring(5).trim();
+      openWebsite(url);
         } else {
           echo(`Command not recognized: ${command}. Use command "help" for help on commands`);
         }
