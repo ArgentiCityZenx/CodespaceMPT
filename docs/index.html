@@ -282,8 +282,8 @@ function saveAs(blob, fileName) {
       mode: "javascript"
     });
   </script>
-<h4>Use GitHub</h4>
-<p>Who said that we have rivalry with GitHub? Matter of fact, we used GitHub pages for this very site!</p>
+<h4>Use GitHub and other coding platforms</h4>
+<p>Who said that we have rivalry with GitHub and others? Matter of fact, we used GitHub pages and VS Code for this very site!</p>
  <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
 <script>
   function createNewRepo() {
@@ -295,10 +295,23 @@ function saveAs(blob, fileName) {
   }
 </script>
   
+  <button id="vscode" onclick="openVscode()">Open VSCode</button>
+
+<script>
+  function openVscode() {
+    // Replace this URL with the URL of VSCode online
+    const vscodeUrl = 'https://vscode.dev/';
+
+    // Open the URL in a new tab
+    window.open(vscodeUrl, '_blank');
+  }
+</script>
+
+  
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file, 
   and make a new repository in GitHub. It also has a built-in terminal with several commands and an easter egg.</p>
 <p>Each day this site gets a new update. Join our Discord for updates!</p>
-
+<p> This is version 1.10.0 </p>
 </body>
 </html>
