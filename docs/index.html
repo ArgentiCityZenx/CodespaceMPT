@@ -172,10 +172,15 @@
   
 
   <textarea id="code-editor"></textarea>
-  <div class="top-right-image">
-  </div>
-      
+
   <div class="container">
+    
+    // Initialize CodeMirror with line numbers
+    const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+      lineNumbers: true,
+      mode: "javascript"
+    });
+    
     <textarea id="inputBox" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want."></textarea>
     <input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
     <select id="fileType">
@@ -313,11 +318,7 @@ function saveAs(blob, fileName) {
       }
     });
 
-    // Initialize CodeMirror with line numbers
-    const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
-      lineNumbers: true,
-      mode: "javascript"
-    });
+    
   </script>
 <h4>Use GitHub and other coding platforms</h4>
 <p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
@@ -374,7 +375,7 @@ function saveAs(blob, fileName) {
     window.open(learnUrl, '_blank');
   }
 </script>
-    </div>
+    </div>    
 </body>
 </html>
 
