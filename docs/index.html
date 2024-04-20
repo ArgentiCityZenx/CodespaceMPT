@@ -111,6 +111,15 @@
       border: none;
       border-radius: 4px;
     }
+      #vscode {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #007fff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
@@ -283,6 +292,16 @@ function saveAs(blob, fileName) {
 
     // Open the URL in a new tab
     window.open(githubNewRepoUrl, '_blank');
+  }
+</script>
+    <button id="vscode" onclick="vscode()">Open VS Code</button>
+<script>
+  function vscode() {
+    // Replace this URL with the URL of GitHub's new repository creation page
+    const vscodeURL = 'vscode.dev';
+
+    // Open the URL in a new tab
+    window.open(vscodeURL, '_blank');
   }
 </script>
 <h1>What is CodespaceMPT?</h1>
