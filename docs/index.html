@@ -139,23 +139,26 @@
   </div>
   <button id="theme-button" onclick="toggleTheme()">Toggle Theme</button>
   
-
+<!-- Code editor textarea -->
   <textarea id="code-editor"></textarea>
 
-  <div class="container">
-    <script>
+  <!-- Textarea and input elements for saving code -->
+  <textarea id="inputBox" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want."></textarea>
+  <input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
+  <select id="fileType">
+    <option value="txt">Text File (.txt)</option>
+    <option value="md">Markdown File (.md)</option>
+  </select>
+  <button id="save" onclick="saveText()">Save File</button>
+
+  <!-- Initialize CodeMirror -->
+  <script>
     // Initialize CodeMirror with line numbers
     const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
       lineNumbers: true,
       mode: "javascript"
     });
-    
-    <textarea id="inputBox" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want."></textarea>
-    <input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
-    <select id="fileType">
-        <option value="txt">Text File (.txt)</option>
-        <option value="md">Markdown File (.md)</option>
-        
+  </script>
     </select>
     <button id="save" onclick="saveText()">Save File</button>
 
