@@ -11,7 +11,7 @@
   <!-- Include appropriate CodeMirror mode (e.g., JavaScript) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/javascript/javascript.min.js"></script>
   <style>
-    body {
+        body {
   font-family: Arial, sans-serif;
   background-color: #000000;
   color: #ffffff; 
@@ -133,47 +133,129 @@
 </head>
 <body>
 <div id="clock"></div>
-
-  <script>
-    function updateClock() {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-    }
-
-    // Update the clock every second
-    setInterval(updateClock, 1000);
-
-    // Initial call to display the clock immediately
-    updateClock();
-  </script>
-  <h1>Homepage</h1>
-
-  <h4>Start writing code</h4>
-<button id="toggleTerminalButton">Terminal</button>
-  <div id="terminal-container">
-    <div id="terminal"></div>
-    <input type="text" id="commandInput" autofocus>
-  </div>
-  <button id="theme-button" onclick="toggleTheme()">Toggle Theme</button>
-  
+<h1>Homepage</h1>
+<h4>Start writing code</h4>
+<button id="toggleTerminalButton">Toggle Terminal</button>
+<div id="terminal-container">
+  <div id="terminal"></div>
+  <input type="text" id="commandInput" autofocus>
+</div>
+<button id="theme-button" onclick="toggleTheme()">Toggle Theme</button>
 <!-- Code editor textarea -->
-  <textarea id="code-editor"></textarea>
-
-  <!-- Textarea and input elements for saving code -->
-  <textarea id="inputBox" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want."></textarea>
-  <input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
-  <select id="fileType">
-    <option value="txt">Text File (.txt)</option>
-    <option value="md">Markdown File (.md)</option>
-  </select>
+<textarea id="code-editor"></textarea>
+<!-- Textarea and input elements for saving code -->
+<textarea id="inputBox" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want."></textarea>
+<input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
+<select id="fileType">
+  <option value="txt">Text File (.txt)</option>
+  <option value="md">Markdown File (.md)</option>
+</select>
 <!-- Save button -->
 <button id="save" onclick="saveText()">Save File</button>
-
-<!-- Script for saving text -->
+<!-- Initialize CodeMirror -->
 <script>
+  // Initialize CodeMirror with line numbers
+  const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+    lineNumbers: true,
+    mode: "javascript"
+  });
+</script>
+<script>
+  const terminalContainer = document.getElementById("terminal-container");
+  const terminal = document.getElementById("terminal");
+  const commandInput = document.getElementById("commandInput");
+  const toggleTerminalButton = document.getElementById("toggleTerminalButton");
+
+  function echo(message) {
+    terminal.innerHTML += `<div>${message}</div>`;
+  }
+
+  function changeTextColor(color) {
+    terminal.style.color = color;
+  }
+
+  function displayIP() {
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        echo(`Your IP address: ${data.ip}`);
+      })
+      .catch(error => {
+        echo('Unable to retrieve IP address. You are the real definition of stealth!');
+        console.error('Error:', error);
+      });
+  }
+
+  function displayDeviceInfo() {
+    const deviceInfo = `Device Type: ${getDeviceType()}, Screen Size: ${getScreenSize()}`;
+    echo(deviceInfo);
+  }
+
+  function getDeviceType() {
+    const userAgent = navigator.userAgent;
+    if (/mobile/i.test(userAgent)) {
+      return 'Mobile';
+    } else if (/tablet/i.test(userAgent)) {
+      return 'Tablet';
+    } else {
+      return 'Desktop';
+    }
+  }
+
+  function getScreenSize() {
+    return `${window.innerWidth} x ${window.innerHeight}`;
+  }
+
+  function displayHelp() {
+    const helpMessage = `
+      Available commands:
+      - echo "message": Displays the provided message.
+      - color #custom: Changes the text color to the specified custom color.
+      - rip: Displays your IP address.
+      - device: Displays your device information.
+      - help: Displays this very help message.`;
+    echo(helpMessage);
+  }
+
+  function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.style.backgroundColor;
+    if (currentTheme === "rgb(255, 255, 255)" || currentTheme === "#ffffff") {
+      body.style.backgroundColor = "#000000";
+      body.style.color = "#ffffff";
+    } else {
+      body.style.backgroundColor = "#ffffff";
+      body.style.color = "#000000";
+    }
+  }
+
+  toggleTerminalButton.addEventListener("click", function() {
+    terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
+  });
+
+  commandInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const command = commandInput.value.trim().toLowerCase();
+      if (command.startsWith("echo")) {
+        const message = command.substring(5).trim();
+        echo(message);
+      } else if (command.startsWith("color")) {
+        const color = command.substring(6).trim();
+        changeTextColor(color);
+      } else if (command === "rip") {
+        displayIP();
+      } else if (command === "device") {
+        displayDeviceInfo();
+      } else if (command === "help") {
+        displayHelp();
+      } else {
+        echo(`Command not recognized: ${command}. Use command "help" for help on commands`);
+      }
+      commandInput.value = "";
+    }
+  });
+
   function saveText() {
     var textToSave = document.getElementById("inputBox").value;
     var fileName = document.getElementById("fileNameInput").value;
@@ -191,189 +273,10 @@
     link.click();
   }
 </script>
-
-</script>
-  <!-- Initialize CodeMirror -->
-  <script>
-    // Initialize CodeMirror with line numbers
-    const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
-      lineNumbers: true,
-      mode: "javascript"
-    });
-  </script>
-    </select>
-
-  
-  <script>
-    const terminalContainer = document.getElementById("terminal-container");
-    const terminal = document.getElementById("terminal");
-    const commandInput = document.getElementById("commandInput");
-    const toggleTerminalButton = document.getElementById("toggleTerminalButton");
-
-function saveText() {
-    var textToSave = document.getElementById("inputBox").value;
-    var fileName = document.getElementById("fileNameInput").value;
-    var fileType = document.getElementById("fileType").value;
-    
- if (fileName.trim() === "") {
-        alert("Come on, don't be lazy bro.");
-        return;
-    }
-  
-    var blob = new Blob([textToSave], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, fileName + "." + fileType);
-}
-
-function saveAs(blob, fileName) {
-    var link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    link.download = fileName;
-    link.click();
-}
-
-
-function saveAs(blob, fileName) {
-    var link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    link.download = fileName;
-    link.click();
-}
-
-      function echo(message) {
-      terminal.innerHTML += `<div>${message}</div>`;
-    }
-
-    function changeTextColor(color) {
-      terminal.style.color = color;
-    }
-
-    function displayIP() {
-      fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => {
-          echo(`Your IP address: ${data.ip}`);
-        })
-        .catch(error => {
-          echo('Unable to retrieve IP address. You are the real definition of stealth!');
-          console.error('Error:', error);
-        });
-    }
-
-    function displayDeviceInfo() {
-      const deviceInfo = `Device Type: ${getDeviceType()}, Screen Size: ${getScreenSize()}`;
-      echo(deviceInfo);
-    }
-    
-    function getDeviceType() {
-      const userAgent = navigator.userAgent;
-      if (/mobile/i.test(userAgent)) {
-        return 'Mobile';
-      } else if (/tablet/i.test(userAgent)) {
-        return 'Tablet';
-      } else {
-        return 'Desktop';
-      }
-    }
-
-    function getScreenSize() {
-      return `${window.innerWidth} x ${window.innerHeight}`;
-    }
-
-    function displayHelp() {
-      const helpMessage = `
-        Available commands:
-        - echo "message": Displays the provided message.
-        - color #custom: Changes the text color to the specified custom color.
-        - rip: Displays your IP address.
-        - device: Displays your device information.
-        - help: Displays this very help message.`
-    }
-      echo(helpMessage);
-    }
-    
-    function toggleTheme() {
-      const body = document.body;
-      const currentTheme = body.style.backgroundColor;
-      if (currentTheme === "rgb(255, 255, 255)" || currentTheme === "#ffffff") {
-        body.style.backgroundColor = "#000000";
-        body.style.color = "#ffffff";
-      } else {
-        body.style.backgroundColor = "#ffffff";
-        body.style.color = "#000000";
-      }
-    }
-
-    
-    toggleTerminalButton.addEventListener("click", function() {
-      terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
-    });
-
-    commandInput.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        const command = commandInput.value.trim().toLowerCase();
-        if (command.startsWith("echo")) {
-          const message = command.substring(5).trim();
-          echo(message);
-        } else if (command.startsWith("color")) {
-          const color = command.substring(6).trim();
-          changeTextColor(color);
-        } else if (command === "rip") {
-          displayIP();
-        } else if (command === "device") {
-          displayDeviceInfo();
-        } else if (command === "help") {
-          displayHelp()
-        } else {
-          echo(`Command not recognized: ${command}. Use command "help" for help on commands`);
-        }
-        commandInput.value = "";
-      }
-    });
-
-    
-  </script>
-<h4>Use GitHub and other coding platforms</h4>
-<p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
- <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
-<script>
-  function createNewRepo() {
-    // Replace this URL with the URL of GitHub's new repository creation page
-    const githubNewRepoUrl = 'https://github.com/new';
-
-    // Open the URL in a new tab
-    window.open(githubNewRepoUrl, '_blank');
-  }
-</script>
-  
-  <button id="vscode" onclick="openVscode()">Open VS Code</button>
-
-<script>
-  function openVscode() {
-    const vscodeUrl = 'https://vscode.dev/';
-
-    // Open the URL in a new tab
-    window.open(vscodeUrl, '_blank');
-  }
-</script>
-
-  <button id="websitetester" onclick="openTester()">Website Tester we Used</button>
-
-<script>
-  function openTester() {
- 
-    const testerUrl = 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_make_a_website_intro';
-
-    // Open the URL in a new tab
-    window.open(testerUrl, '_blank');
-  }
-</script>
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file, 
   and make a new repository in GitHub. It also has a built-in terminal with several commands and an easter egg. 
   We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
 <p> This is version 1.10.7 </p>
-    
 </body>
 </html>
-
