@@ -133,17 +133,20 @@
 </head>
 <body>
 <div id="clock"></div>
-<h1>Homepage</h1>
+<h1>CodespaceMPT Homepage</h1>
 <h4>Start writing code</h4>
-<button id="toggleTerminalButton">Toggle Terminal</button>
+<button id="toggleTerminalButton">Terminal</button>
 <div id="terminal-container">
   <div id="terminal"></div>
   <input type="text" id="commandInput" autofocus>
 </div>
-<button id="theme-button" onclick="toggleTheme()">Toggle Theme</button>
+<button id="theme-button" onclick="toggleTheme()">Theme</button>
 <!-- Code editor textarea -->
 <textarea id="code-editor"></textarea>
-<!-- Textarea and input elements for saving code -->
+
+
+<p> </p>
+
 <textarea id="inputBox" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want."></textarea>
 <input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
 <select id="fileType">
@@ -256,27 +259,71 @@
     }
   });
 
-  function saveText() {
+let attempts = 0;
+
+function saveText() {
     var textToSave = document.getElementById("inputBox").value;
     var fileName = document.getElementById("fileNameInput").value;
     var fileType = document.getElementById("fileType").value;
 
     if (fileName.trim() === "") {
-      alert("Don't be lazy and pick a name bro.");
-      return;
+        attempts++;
+        if (attempts >= 5) {
+            alert("If you fuck around I'll dox you");
+            return;
+        }
+        alert("Don't be lazy and pick a name bro.");
+        return;
     }
-
+ 
+    
     var blob = new Blob([textToSave], { type: "text/plain;charset=utf-8" });
     var link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
     link.download = fileName + "." + fileType;
     link.click();
-  }
+}
+
 </script>
+<h4>Use GitHub and other coding platforms</h4>
+ <p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
+  <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
+ <script>
+   function createNewRepo() {
+     // Replace this URL with the URL of GitHub's new repository creation page
+     const githubNewRepoUrl = 'https://github.com/new';
+
+     // Open the URL in a new tab
+     window.open(githubNewRepoUrl, '_blank');
+   }
+ </script>
+
+   <button id="vscode" onclick="openVscode()">Open VS Code</button>
+
+ <script>
+   function openVscode() {
+     const vscodeUrl = 'https://vscode.dev/';
+
+     // Open the URL in a new tab
+     window.open(vscodeUrl, '_blank');
+   }
+ </script>
+
+   <button id="websitetester" onclick="openTester()">Website Tester we Used</button>
+
+ <script>
+   function openTester() {
+
+     const testerUrl = 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_make_a_website_intro';
+
+     // Open the URL in a new tab
+     window.open(testerUrl, '_blank');
+   }
+ </script>
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file, 
-  and make a new repository in GitHub. It also has a built-in terminal with several commands and an easter egg. 
+  and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs. 
   We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
-<p> This is version 1.10.7 </p>
+<p> This is version 1.10.8 </p>
 </body>
 </html>
