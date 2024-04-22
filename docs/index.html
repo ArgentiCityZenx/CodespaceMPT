@@ -149,8 +149,30 @@
     <option value="txt">Text File (.txt)</option>
     <option value="md">Markdown File (.md)</option>
   </select>
-  <button id="save" onclick="saveText()">Save File</button>
+<!-- Save button -->
+<button id="save" onclick="saveText()">Save File</button>
 
+<!-- Script for saving text -->
+<script>
+  function saveText() {
+    var textToSave = document.getElementById("inputBox").value;
+    var fileName = document.getElementById("fileNameInput").value;
+    var fileType = document.getElementById("fileType").value;
+
+    if (fileName.trim() === "") {
+      alert("Don't be lazy and pick a name bro.");
+      return;
+    }
+
+    var blob = new Blob([textToSave], { type: "text/plain;charset=utf-8" });
+    var link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName + "." + fileType;
+    link.click();
+  }
+</script>
+
+</script>
   <!-- Initialize CodeMirror -->
   <script>
     // Initialize CodeMirror with line numbers
@@ -160,7 +182,6 @@
     });
   </script>
     </select>
-    <button id="save" onclick="saveText()">Save File</button>
 
   
   <script>
