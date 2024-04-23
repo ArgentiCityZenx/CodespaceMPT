@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodespaceMPT</title>
+  <!-- Include CodeMirror CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+  <!-- Include CodeMirror JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+  <!-- Include appropriate CodeMirror mode (e.g., JavaScript) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/javascript/javascript.min.js"></script>
+  <style>
+        body {
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+  color: #ffffff; 
+  margin: 0;
+  padding: 0;
+}
+    #code-editor {
+      width: 80%;
+      height: 60vh;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+    }
+    #theme-button {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #7E6348;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    #theme-button:hover {
+      background-color: #66513b;
+    }
+    .top-right-image {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
+    }
+    #terminal-container {
+      width: 80%;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      background-color: #000;
+      color: #fff;
+     display: none;
+    }
+    #terminal {
+      padding: 10px;
+    }
+    
+    .container {
+        width: 80%;
+        margin: 20px auto;
+    }
+    textarea {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    select {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #048A81;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+      #createRepoButton {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #0A8047;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+      #vscode {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #007fff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+      #websitetester {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #7dab6a;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+      #chatgpt {
+      background-color: #4CAF50; /* Color verde */
+      color: white;
+      padding: 15px 25px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+    }
+      #save {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #e4b62c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    #clock {
+      font-size: 3em;
+    }
+  </style>
+</head>
+<body>
+<div id="clock">
+      <span id="datetime"></span>
+
+    <script>
+      // create a function to update the date and time
+      function updateDateTime() {
+        // create a new `Date` object
+        const now = new Date();
+
+        // get the current date and time as a string
+        const currentDateTime = now.toLocaleString();
+
+        // update the `textContent` property of the `span` element with the `id` of `datetime`
+        document.querySelector('#datetime').textContent = currentDateTime;
+      }
+
+      // call the `updateDateTime` function every second
+      setInterval(updateDateTime, 1000);
+    </script>
+</div>
+<h1>CodespaceMPT Homepage</h1>
+<h4>Start writing code</h4>
+<button id="toggleTerminalButton">Terminal</button>
+<div id="terminal-container">
+  <div id="terminal"></div>
+  <input type="text" id="commandInput" autofocus>
+</div>
+<button id="theme-button" onclick="toggleTheme()">Theme</button>
+<!-- Code editor textarea -->
+<textarea id="code-editor"></textarea>
+
+
+<p> </p>
+
+<textarea id="inputBox" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want."></textarea>
+<input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
+<select id="fileType">
+  <option value="txt">Text File (.txt)</option>
+  <option value="md">Markdown File (.md)</option>
+</select>
+<!-- Save button -->
+<button id="save" onclick="saveText()">Save File</button>
+<!-- Initialize CodeMirror -->
+<script>
+  // Initialize CodeMirror with line numbers
+  const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+    lineNumbers: true,
+    mode: "javascript"
+  });
+</script>
+<script>
+  const terminalContainer = document.getElementById("terminal-container");
+  const terminal = document.getElementById("terminal");
+  const commandInput = document.getElementById("commandInput");
+  const toggleTerminalButton = document.getElementById("toggleTerminalButton");
+
+  function echo(message) {
+    terminal.innerHTML += `<div>${message}</div>`;
+  }
+
+  function changeTextColor(color) {
+    terminal.style.color = color;
+  }
+
+  function displayIP() {
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        echo(`Your IP address: ${data.ip}`);
+      })
+      .catch(error => {
+        echo('Unable to retrieve IP address. You are the real definition of stealth!');
+        console.error('Error:', error);
+      });
+  }
+
+  function displayDeviceInfo() {
+    const deviceInfo = `Device Type: ${getDeviceType()}, Screen Size: ${getScreenSize()}`;
+    echo(deviceInfo);
+  }
+
+  function getDeviceType() {
+    const userAgent = navigator.userAgent;
+    if (/mobile/i.test(userAgent)) {
+      return 'Mobile';
+    } else if (/tablet/i.test(userAgent)) {
+      return 'Tablet';
+    } else {
+      return 'Desktop';
+    }
+  }
+
+  function getScreenSize() {
+    return `${window.innerWidth} x ${window.innerHeight}`;
+  }
+
+  function displayHelp() {
+    const helpMessage = `
+      Available commands:
+      - echo "message": Displays the provided message.
+      - color #custom: Changes the text color to the specified custom color.
+      - rip: Displays your IP address.
+      - device: Displays your device information.
+      - help: Displays this very help message.`;
+    echo(helpMessage);
+  }
+
+  function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.style.backgroundColor;
+    if (currentTheme === "rgb(255, 255, 255)" || currentTheme === "#ffffff") {
+      body.style.backgroundColor = "#000000";
+      body.style.color = "#ffffff";
+    } else {
+      body.style.backgroundColor = "#ffffff";
+      body.style.color = "#000000";
+    }
+  }
+
+  toggleTerminalButton.addEventListener("click", function() {
+    terminalContainer.style.display = terminalContainer.style.display === 'none' ? 'block' : 'none';
+  });
+
+  commandInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const command = commandInput.value.trim().toLowerCase();
+      if (command.startsWith("echo")) {
+        const message = command.substring(5).trim();
+        echo(message);
+      } else if (command.startsWith("color")) {
+        const color = command.substring(6).trim();
+        changeTextColor(color);
+      } else if (command === "rip") {
+        displayIP();
+      } else if (command === "device") {
+        displayDeviceInfo();
+      } else if (command === "help") {
+        displayHelp();
+      } else {
+        echo(`Command not recognized: ${command}. Use command "help" for help on commands`);
+      }
+      commandInput.value = "";
+    }
+  });
+
+let attempts = 0;
+
+function saveText() {
+    var textToSave = document.getElementById("inputBox").value;
+    var fileName = document.getElementById("fileNameInput").value;
+    var fileType = document.getElementById("fileType").value;
+
+    if (fileName.trim() === "") {
+        attempts++;
+        if (attempts >= 5) {
+            alert("If you fuck around I'll dox you");
+            return;
+        }
+        alert("Don't be lazy and pick a name bro.");
+        return;
+    }
+ 
+    
+    var blob = new Blob([textToSave], { type: "text/plain;charset=utf-8" });
+    var link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName + "." + fileType;
+    link.click();
+}
+
+</script>
+<h4>Use GitHub and other coding platforms</h4>
+ <p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
+  <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
+ <script>
+   function createNewRepo() {
+     // Replace this URL with the URL of GitHub's new repository creation page
+     const githubNewRepoUrl = 'https://github.com/new';
+
+     // Open the URL in a new tab
+     window.open(githubNewRepoUrl, '_blank');
+   }
+ </script>
+
+   <button id="vscode" onclick="openVscode()">Open VS Code</button>
+
+ <script>
+   function openVscode() {
+     const vscodeUrl = 'https://vscode.dev/';
+
+     // Open the URL in a new tab
+     window.open(vscodeUrl, '_blank');
+   }
+ </script>
+
+   <button id="websitetester" onclick="openTester()">Website Tester we Used</button>
+
+ <script>
+   function openTester() {
+
+     const testerUrl = 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_make_a_website_intro';
+
+     // Open the URL in a new tab
+     window.open(testerUrl, '_blank');
+   }
+ </script>
+  <button id="AskChatGPT" onclick="chatgpt()">Ask ChatGPT how to write a code</button>
+  <script>
+    function chatgpt() {
+      // Replace this URL with the URL of GitHub's new repository creation page
+      const ChatGPTAsk = 'chat.openai.com';
+ 
+      // Open the URL in a new tab
+      window.open(ChatGPTAsk, '_blank');
+    }
+  </script>
+ 
+<h1>What is CodespaceMPT?</h1>
+<p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file, 
+  and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs. 
+  We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
+<p> This is version 1.10.8 </p>
+</body>
+</html>
