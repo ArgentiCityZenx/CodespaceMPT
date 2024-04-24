@@ -19,6 +19,22 @@
             padding: 0;
         }
 
+        #countdown-box {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: none;
+        }
+
+        .hide {
+            display: none;
+        }
+
         #code-editor {
             width: 80%;
             height: 60vh;
@@ -160,6 +176,9 @@
     </style>
 </head>
 <body>
+<div id="countdown-box">
+    <div id="countdown"></div>
+</div>
 <div id="clock">
     <span id="datetime"></span>
 
@@ -190,7 +209,10 @@
 <button id="theme-button" onclick="toggleTheme()">Theme</button>
 <!-- Code editor textarea -->
 <textarea id="code-editor"></textarea>
+
+
 <p> </p>
+
 <textarea id="inputBox" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want."></textarea>
 <input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
 <select id="fileType">
@@ -212,6 +234,8 @@
     const terminal = document.getElementById("terminal");
     const commandInput = document.getElementById("commandInput");
     const toggleTerminalButton = document.getElementById("toggleTerminalButton");
+    const countdownBox = document.getElementById("countdown-box");
+    const countdownDisplay = document.getElementById("countdown");
 
     function echo(message) {
         terminal.innerHTML += `<div>${message}</div>`;
@@ -260,7 +284,8 @@
       - color #custom: Changes the text color to the specified custom color.
       - rip: Displays your IP address.
       - device: Displays your device information.
-      - help: Displays this very help message.`;
+      - help: Displays this very help message.
+      - whenisit date: Displays countdown to the specified date (format: YYYY-MM-DD).`;
         echo(helpMessage);
     }
 
@@ -306,8 +331,8 @@
         }
     });
 
-    function displayCountdown(dateString) {
-        const targetDate = new Date(dateString).getTime();
+    function displayCountdown(targetDateString) {
+        const targetDate = new Date(targetDateString).getTime();
 
         // Update the countdown every second
         const countdownInterval = setInterval(function() {
@@ -316,7 +341,7 @@
 
             if (timeDifference <= 0) {
                 clearInterval(countdownInterval);
-                echo("Countdown expired!");
+                countdownBox.style.display = 'none';
                 return;
             }
 
@@ -328,7 +353,7 @@
             const months = Math.floor(days / 30);
             const years = Math.floor(days / 365);
 
-            echo(`
+            countdownDisplay.innerHTML = `
                 <div>${years} years</div>
                 <div>${months} months</div>
                 <div>${weeks} weeks</div>
@@ -336,7 +361,8 @@
                 <div>${hours} hours</div>
                 <div>${minutes} minutes</div>
                 <div>${seconds} seconds</div>
-            `);
+            `;
+            countdownBox.style.display = 'block';
         }, 1000);
     }
 
@@ -350,7 +376,7 @@
         if (fileName.trim() === "") {
             attempts++;
             if (attempts >= 5) {
-                alert("If you mess around I'll send a sock monster after you");
+                alert("If you mess around I'll dox you");
                 return;
             }
             alert("Don't be lazy and pick a name bro.");
@@ -412,8 +438,8 @@
 </script>
 
 <h1>What is CodespaceMPT?</h1>
-<p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file, 
-    and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs. 
+<p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file,
+    and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
     We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
 <p> This is version 1.10.8 </p>
 <h4> Learn Python </h4>
