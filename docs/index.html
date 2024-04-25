@@ -150,9 +150,9 @@
         #AskChatGPT {
             background-color: #4CAF50; /* Color verde */
             color: white;
-            padding: 15px 25px;
+            padding: 10px 20px;
             text-align: center;
-            font-size: 16px;
+            font-size: 10px;
             cursor: pointer;
             border: none;
             border-radius: 5px;
@@ -172,6 +172,19 @@
 
         #clock {
             font-size: 3em;
+        }
+         .drop-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .drop-area:hover {
+            background-color: #f0f0f0;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -220,13 +233,31 @@
     <option value="md">Markdown File (.md)</option>
 </select>
 <!-- Save button -->
-<button id="save" onclick="saveText()">Save File</button>
+<button id="save" onclick="saveText()">Save File</button> or
 <!-- Initialize CodeMirror -->
 <script>
     // Initialize CodeMirror with line numbers
     const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
         lineNumbers: true,
         mode: "javascript"
+    });
+</script>
+<div class="drop-area" id="dropArea">
+    <p>Drag and drop your file here or click to select</p>
+    <input id="fileInput" type="file" class="hidden" name="file">
+</div>
+
+<script>
+    const dropArea = document.getElementById('dropArea');
+    const fileInput = document.getElementById('fileInput');
+
+    dropArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', () => {
+        // Handle file selection here if needed
+        console.log('File selected:', fileInput.files[0].name);
     });
 </script>
 <script>
