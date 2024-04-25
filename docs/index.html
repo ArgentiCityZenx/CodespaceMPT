@@ -325,7 +325,65 @@ function saveText() {
     link.download = fileName + "." + fileType;
     link.click();
 }
+    function displayCountdown(targetDateString) {
+        const targetDate = new Date(targetDateString).getTime();
 
+        // Update the countdown every second
+        const countdownInterval = setInterval(function() {
+            const currentDate = new Date().getTime();
+            const timeDifference = targetDate - currentDate;
+
+            if (timeDifference <= 0) {
+                clearInterval(countdownInterval);
+                countdownBox.style.display = 'none';
+                return;
+            }
+
+            const seconds = Math.floor(timeDifference / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            const weeks = Math.floor(days / 7);
+            const months = Math.floor(days / 30);
+            const years = Math.floor(days / 365);
+
+            countdownDisplay.innerHTML = `
+                <div>${years} years</div>
+                <div>${months} months</div>
+                <div>${weeks} weeks</div>
+                <div>${days} days</div>
+                <div>${hours} hours</div>
+                <div>${minutes} minutes</div>
+                <div>${seconds} seconds</div>
+            `;
+            countdownBox.style.display = 'block';
+        }, 1000);
+    }
+
+    let attempts = 0;
+
+    function saveText() {
+        var textToSave = document.getElementById("inputBox").value;
+        var fileName = document.getElementById("fileNameInput").value;
+        var fileType = document.getElementById("fileType").value;
+
+        if (fileName.trim() === "") {
+            attempts++;
+            if (attempts >= 5) {
+                alert("If you mess around I'll dox you");
+                return;
+            }
+            alert("Don't be lazy and pick a name bro.");
+            return;
+        }
+
+
+        var blob = new Blob([textToSave], { type: "text/plain;charset=utf-8" });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName + "." + fileType;
+        link.click();
+    }
 </script>
 <h4>Use GitHub and other coding platforms</h4>
  <p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
