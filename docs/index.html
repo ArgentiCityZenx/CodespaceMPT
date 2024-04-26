@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/javascript/javascript.min.js"></script>
     <style>
         body {
-            font-family: Sans Serif;
+            font-family: Arial, sans serif;
             background-color: #000000;
             text-align: left;
             color: #ffffff;
@@ -183,6 +183,18 @@
             display: none;
         }
         
+        #joinDiscord {
+            background-color: #7785cc; /* Color blue */
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -447,7 +459,17 @@
         window.open(ChatGPTAsk, '_blank');
     }
 </script>
+<button id="joinDiscord" onclick="discord()">Join our Discord Server</button>
+<script>
+    function discord() {
+        // Replace this URL with the URL of GitHub's new repository creation page
+        const discordServer = 'https://discord.gg/5EDEg7WWx8';
 
+        // Open the URL in a new tab
+        window.open(discordServer, '_blank');
+    }
+</script>
+    
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file,
     and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
