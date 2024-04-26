@@ -173,17 +173,12 @@
         #clock {
             font-size: 3em;
         }
-         .drop-area {
-            border: 2px dashed #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-        }
-        .drop-area:hover {
-            background-color: #f0f0f0;
-        }
-        .hidden {
+        # {
+            width: 80%;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            background-color: #000;
+            color: #fff;
             display: none;
         }
     </style>
@@ -242,24 +237,7 @@
         mode: "javascript"
     });
 </script>
-<div class="drop-area" id="dropArea">
-    <p>Drag and drop your file here or click to select</p>
-    <input id="fileInput" type="file" class="hidden" name="file">
-</div>
 
-<script>
-    const dropArea = document.getElementById('dropArea');
-    const fileInput = document.getElementById('fileInput');
-
-    dropArea.addEventListener('click', () => {
-        fileInput.click();
-    });
-
-    fileInput.addEventListener('change', () => {
-        // Handle file selection here if needed
-        console.log('File selected:', fileInput.files[0].name);
-    });
-</script>
 <script>
     const terminalContainer = document.getElementById("terminal-container");
     const terminal = document.getElementById("terminal");
@@ -267,7 +245,7 @@
     const toggleTerminalButton = document.getElementById("toggleTerminalButton");
     const countdownBox = document.getElementById("countdown-box");
     const countdownDisplay = document.getElementById("countdown");
-
+    
     function echo(message) {
         terminal.innerHTML += `<div>${message}</div>`;
     }
@@ -473,10 +451,14 @@
     and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
     We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
 <p> This is version 1.11.1 </p>
-<h4> Learn Python, JavaScript, or HTML</h4>
-    <p>Python is a good language because it is simple unlike others. However, we used Javascript and HTML for this site, we'll link the tutorials for them below:</p>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/kqtD5dpn9C8?si=p43SieTBwNnWPphh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/qz0aGYrrlhU?si=Y_uQGSUUhOVPewAP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/W6NZfCO5SIk?si=_oi8kuuyhHKhXgYW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div>
+    <h4> Learn Python, JavaScript, or HTML</h4>
+    <p>Python is a good language because it is simple unlike others. However, we used Javascript and HTML for this site.</p>
+    <p>Read the paragraph below to learn how to code!</p>
+
+<h1>How do I learn some coding?</h1>
+ <p>To learn coding, you must get everything setup. You can use this site to make the code and write as you read. </p>
+ <p>You will first write a simple message using print("Hello World!"). This will display the message "Hello World!" when run.</p>   
+</div>
 </body>
 </html>
