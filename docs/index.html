@@ -181,6 +181,44 @@
             color: #fff;
             display: none;
         }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .countdown-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="date"] {
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #countdown {
+            margin-top: 20px;
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
@@ -451,6 +489,53 @@
     and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
     We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
 <p> This is version 1.11.1 </p>
+
+    <div class="countdown-container">
+        <h1>Countdown Timer</h1>
+        <div>
+            <label for="target-date">Enter target date:</label>
+            <input type="date" id="target-date">
+            <button onclick="startCountdown()">Start Countdown</button>
+        </div>
+        <div id="countdown"></div>
+    </div>
+    <script>
+        function startCountdown() {
+            var targetDate = new Date(document.getElementById('target-date').value).getTime();
+            var countdown = document.getElementById('countdown');
+
+            // Update the countdown every second
+            var countdownInterval = setInterval(function() {
+                var currentDate = new Date().getTime();
+                var timeDifference = targetDate - currentDate;
+
+                if (timeDifference <= 0) {
+                    clearInterval(countdownInterval);
+                    countdown.innerHTML = "Countdown expired!";
+                    return;
+                }
+
+                var seconds = Math.floor(timeDifference / 1000);
+                var minutes = Math.floor(seconds / 60);
+                var hours = Math.floor(minutes / 60);
+                var days = Math.floor(hours / 24);
+                var weeks = Math.floor(days / 7);
+                var months = Math.floor(days / 30);
+                var years = Math.floor(days / 365);
+
+                countdown.innerHTML = `
+                    <div>${years} years</div>
+                    <div>${months} months</div>
+                    <div>${weeks} weeks</div>
+                    <div>${days} days</div>
+                    <div>${hours} hours</div>
+                    <div>${minutes} minutes</div>
+                    <div>${seconds} seconds</div>
+                `;
+            }, 1000);
+        }
+    </script>
+
 
 </body>
 </html>
