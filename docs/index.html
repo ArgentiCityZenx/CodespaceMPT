@@ -179,7 +179,7 @@
             color: #fff;
             display: none;
         }
-        
+
         #joinDiscord {
             padding: 10px 20px;
             margin: 10px;
@@ -253,7 +253,7 @@
     const toggleTerminalButton = document.getElementById("toggleTerminalButton");
     const countdownBox = document.getElementById("countdown-box");
     const countdownDisplay = document.getElementById("countdown");
-    
+
     function echo(message) {
         terminal.innerHTML += `<div>${message}</div>`;
     }
@@ -408,6 +408,46 @@
         link.click();
     }
 </script>
+  <style>
+    #dropArea {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Subir Archivos</h2>
+  <div id="dropArea" onclick="handleClick(event)" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+    Arrastra y suelta archivos aquí o haz clic para seleccionar archivos
+    <input type="file" id="fileElem" multiple accept="image/*" style="display: none;">
+  </div>
+
+  <script>
+    function handleDragOver(event) {
+      event.preventDefault();
+    }
+
+    function handleDrop(event) {
+      event.preventDefault();
+      const files = event.dataTransfer.files;
+      handleFiles(files);
+    }
+
+    function handleClick(event) {
+      document.getElementById('fileElem').click();
+    }
+
+    function handleFiles(files) {
+      for (const file of files) {
+        console.log('Nombre del archivo:', file.name);
+        console.log('Tipo de archivo:', file.type);
+        console.log('Tamaño del archivo:', file.size, 'bytes');
+        // Aquí puedes agregar la lógica para subir los archivos a un servidor
+      }
+    }
+  </script>
 <h4>Use GitHub and other coding platforms</h4>
 <p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
 <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
@@ -463,7 +503,7 @@
         window.open(discordServer, '_blank');
     }
 </script>
-    
+
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file,
     and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
