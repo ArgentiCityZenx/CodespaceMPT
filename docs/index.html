@@ -111,7 +111,7 @@
 
         button {
             padding: 10px 20px;
-            background-color: #048A81;
+            background-color: #98273F;
             color: white;
             border: none;
             border-radius: 5px;
@@ -171,15 +171,7 @@
         #clock {
             font-size: 3em;
         }
-        # {
-            width: 80%;
-            margin: 20px auto;
-            border: 1px solid #ccc;
-            background-color: #000;
-            color: #fff;
-            display: none;
-        }
-
+        
         #joinDiscord {
             padding: 10px 20px;
             margin: 10px;
@@ -189,6 +181,26 @@
             border: none;
             border-radius: 4px;
         }
+            .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        height: 100vh;
+    }
+    .input-box,
+    .output-box {
+        flex: 1;
+        padding: 20px;
+    }
+    textarea {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+    }
     </style>
 </head>
 <body>
@@ -216,7 +228,7 @@
     </script>
 </div>
 <h1>CodespaceMPT Homepage</h1>
-<h4>Start writing code</h4>
+<h4></> Start writing code</h4>
 <button id="toggleTerminalButton">Terminal</button>
 <div id="terminal-container">
     <div id="terminal"></div>
@@ -253,7 +265,7 @@
     const toggleTerminalButton = document.getElementById("toggleTerminalButton");
     const countdownBox = document.getElementById("countdown-box");
     const countdownDisplay = document.getElementById("countdown");
-
+    
     function echo(message) {
         terminal.innerHTML += `<div>${message}</div>`;
     }
@@ -418,36 +430,6 @@
   </style>
 </head>
 <body>
-  <h2>Subir Archivos</h2>
-  <div id="dropArea" onclick="handleClick(event)" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
-    Arrastra y suelta archivos aquí o haz clic para seleccionar archivos
-    <input type="file" id="fileElem" multiple accept="image/*" style="display: none;">
-  </div>
-
-  <script>
-    function handleDragOver(event) {
-      event.preventDefault();
-    }
-
-    function handleDrop(event) {
-      event.preventDefault();
-      const files = event.dataTransfer.files;
-      handleFiles(files);
-    }
-
-    function handleClick(event) {
-      document.getElementById('fileElem').click();
-    }
-
-    function handleFiles(files) {
-      for (const file of files) {
-        console.log('Nombre del archivo:', file.name);
-        console.log('Tipo de archivo:', file.type);
-        console.log('Tamaño del archivo:', file.size, 'bytes');
-        // Aquí puedes agregar la lógica para subir los archivos a un servidor
-      }
-    }
-  </script>
 <h4>Use GitHub and other coding platforms</h4>
 <p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
 <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
@@ -503,13 +485,124 @@
         window.open(discordServer, '_blank');
     }
 </script>
-
+    
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file,
     and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
     We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
 <p> This is version 1.11.1 </p>
 
+<h1>How do I use it?</h1>
+<p>This code editor can be used in a simple way. Just write your code and once you are finished you can copy paste it to the box below the code editor, choose what kind of file you'll make, and hit save! </p>    
+
+<h1>Learn Coding Easily</h1>
+<p>You may follow these tutorials from Coding with Mosh (not sponsored) to learn coding for your business or even when your bored!</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/W6NZfCO5SIk?si=e9VSnWlIKprzxV42" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/kqtD5dpn9C8?si=ecg304LryZUrJhBk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/qz0aGYrrlhU?si=h1s0OvFt1C8KDTbY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h1> Test a site </h1>
+<p> Note that you must be in light mode to use this. </p>
+<div class="container">
+    <div class="input-box">
+        <h2>Input HTML Code:</h2>
+        <textarea id="inputCode" rows="10"></textarea>
+        <button onclick="runCode()">Run</button>
+    </div>
+    <div class="output-box">
+        <h2>Output:</h2>
+        <iframe id="outputFrame" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+</div>
+
+<script>
+    function runCode() {
+        var inputCode = document.getElementById('inputCode').value;
+        var outputFrame = document.getElementById('outputFrame').contentWindow.document;
+        outputFrame.open();
+        outputFrame.write(inputCode);
+        outputFrame.close();
+    }
+</script>
+<br><br><br><br><br><br><br><br>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ejercicios de Práctica</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  .exercise {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+  }
+  .output {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+    text-emphasis-color: black;
+  }
+</style>
+</head>
+<body>
+<h1>Ejercicios de Práctica</h1>
+
+<div class="exercise">
+  <h2>Exercise 1 - HTML</h2>
+  <p>Create an ordered list (ol) with three items that describe your hobbies.</p>
+  <ol id="html-output"></ol>
+  <input type="text" id="html-input" placeholder="Type here your HTML code">
+  <button onclick="runHTML()">Run</button>
+  <div class="output" id="html-result"></div>
+</div>
+
+<div class="exercise">
+  <h2>Exercise 2 - JavaScript</h2>
+  <p>Write a function in JavaScript that adds two numbers and returns the result.</p>
+  <input type="text" id="js-input" placeholder="Type here your JavaScript code">
+  <button onclick="runJS()">Run</button>
+  <div class="output" id="js-result"></div>
+</div>
+<script>
+  function runHTML() {
+    var htmlCode = document.getElementById("html-input").value;
+    var olElement = document.createElement('ol');
+    olElement.innerHTML = htmlCode;
+    var listItems = olElement.querySelectorAll('li');
+    if (listItems.length >= 3) {
+      document.getElementById("html-output").innerHTML = htmlCode;
+      document.getElementById("html-result").innerText = "You did it!";
+    } else {
+      document.getElementById("html-result").innerText = "Try again. Be sure to include at least three items<li>.";
+    }
+  }
+
+  function runJS() {
+    var jsCode = document.getElementById("js-input").value;
+    try {
+      eval(jsCode);
+      document.getElementById("js-result").innerText = "You did it!";
+    } catch (error) {
+      document.getElementById("js-result").innerText = "Try again.";
+    }
+  }
+</script>
+
+</body>
+</html>
 <h1>How do I use it?</h1>
 <p>This code editor can be used in a simple way. Just write your code and once you are finished you can copy paste it to the box below the code editor, choose what kind of file you'll make, and hit save! </p>    
 </body>
