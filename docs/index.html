@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="https://ibb.co/3m7MLc8" type="image/x-icon"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodespaceMPT</title>
+    <!-- Include CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+    <!-- Include CodeMirror JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <!-- Include appropriate CodeMirror mode (e.g., JavaScript) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/javascript/javascript.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans serif;
+            background-color: #000000;
+            text-align: left;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        #countdown-box {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: none;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        #code-editor {
+            width: 200px;
+            height: 100px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+        }
+
+        #theme-button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #414080;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #theme-button:hover {
+            background-color: #393870;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        select {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #98273F;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #createRepoButton {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #0A8047;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #vscode {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #007fff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #AskChatGPT {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50; /* Color verde */
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #save {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #e4b62c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #clock {
+            font-size: 3em;
+        }
+        
+        #joinDiscord {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #7785cc; /* Color blue */
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    textarea {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+    }
+    .exercise {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    background-color: #000000;
+  }
+  .output {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+    text-emphasis-color: black;
+  }
+  .image {
+    width: 50px;
+    height: 50px;
+}
+.learnMPT {
+    background-color: #242323;
+    position: inherit;
+    width: 300px;
+    height: 300px;
+    color: white;
+}
+.html-tutorial {
+    margin: 30px;
+    background-color: #3a5ed4;
+    padding: 30px 60px;
+    font-size: large;
+    color: white;
+}
+.readme-tutorial {
+    margin: 30px;
+    background-color: #3a5ed4;
+    padding: 30px 60px;
+    font-size: large;
+    color: white;
+}
+        
+    #terminal {
+        width: 100%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+        max-height: 400px;
+        text-align: left;
+    }
+
+    .input {
+        color: #fff;
+        width: 80%;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        border: none;
+        background-color: #333;
+        border-radius: 3px;
+    }
+
+    #input-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+    </style>
+</head>
+<body>
+    <img src="https://i.ibb.co/xKv9j2h/IMG-2062-removebg-preview.png" alt="CodespaceMPT" class="image">
+</div>
+<div id="clock">
+    <span id="datetime"></span>
+<script>
+        function sum(a,b)
+        {
+            let result = a + b;
+            alert("The result of the sum is " + result);
+        }
+</script>
+    <script>
+        // create a function to update the date and time
+        function updateDateTime() {
+            // create a new `Date` object
+            const now = new Date();
+
+            // get the current date and time as a string
+            const currentDateTime = now.toLocaleString();
+
+            // update the `textContent` property of the `span` element with the `id` of `datetime`
+            document.querySelector('#datetime').textContent = currentDateTime;
+        }
+
+        // call the `updateDateTime` function every second
+        setInterval(updateDateTime, 1000);
+    </script>
+</div>
+<h4>Run "Help" to see what commands you can run in the terminal console below</h4>
+
+
+<div id="terminal">
+    <h3>Welcome to HTML Terminal</h3>
+    <p>Type 'help' for a list of available commands</p>
+</div>
+<div id="input-container">
+    <input id="input" class="input" placeholder=">_">
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const terminal = document.getElementById('terminal');
+        const input = document.getElementById('input');
+        input.focus();
+
+        const commands = {
+            getIPv4: async () => {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return `Your IPv4 is: ${data.ip}`;
+            },
+            getIPv6: async () => {
+                const response = await fetch('https://api64.ipify.org?format=json');
+                const data = await response.json();
+                return `Your IPv6 is: ${data.ip}`;
+            },
+            GithubFiles: async link => {
+                try {
+                    const response = await fetch(`https://api.github.com/repos/${link}/contents`);
+                    const data = await response.json();
+                    const files = data.map(item => item.name).join(', ');
+                    return `Files in the repository: ${files}`;
+                } catch (error) {
+                    return `Error: ${error.message}`;
+                }
+            },
+            echo: message => {
+                return message;
+            },
+            searchGoogle: async query => {
+                window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+                return `Searching Google for: ${query}`;
+            },
+            openLink: async link => {
+                window.open(link, '_blank');
+                return `Opening link: ${link}`;
+            },
+            help: () => {
+                return 'Available commands: getIPv4/6, Gets your IPv4 or IPv6. getCountry, Gets your country. githubFiles (username, repo), Get files from github repos. echo message, Echoes a message. about, About this terminal. help, Shows this message. searchGoogle, Search in Google something. openLink, Opens up a link.';
+            },
+            about: () => {
+                return 'HTML Terminal - Version 1.0';
+            },
+            getCountry: async () => {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                return data.country_name;
+            }
+        };
+
+        input.addEventListener('keyup', async function(event) {
+            if (event.key === 'Enter') {
+                const command = input.value.trim();
+                input.value = '';
+                if (command) {
+                    const [cmd, ...args] = command.split(' ');
+                    if (commands.hasOwnProperty(cmd)) {
+                        let result;
+                        if (args.length > 0) {
+                            result = await commands[cmd](...args);
+                        } else {
+                            result = await commands[cmd]();
+                        }
+                        displayOutput(result);
+                    } else {
+                        displayOutput(`Command not found: ${cmd}`);
+                        displayOutput(`Type 'help' for a list of commands.`);
+                    }
+                }
+            }
+        });
+
+        function displayOutput(output) {
+            const p = document.createElement('p');
+            p.textContent = output;
+            terminal.appendChild(p);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+    });
+</script>
+
+<button id="theme-button" onclick="toggleTheme()">Theme</button>
+<script>    
+    let darkTheme = false;
+
+function toggleTheme() {
+    const body = document.body;
+    darkTheme = !darkTheme;
+    if (darkTheme) {
+        body.style.backgroundColor = '#000000';
+        body.style.color = '#ffffff';
+    } else {
+        body.style.backgroundColor = '#ffffff';
+        body.style.color = '#000000';
+    }
+}
+</script>
+    <p>Start writing code </p>
+<!-- Code editor textarea -->
+<textarea id="code-editor"></textarea>
+
+
+
+<textarea id="inputBox" onkeydown="checkKeyPress(event)" placeholder="You can save your code by copying it and pasting it in this box then naming it to whatever you want. You can also make notes in this box!"></textarea>
+<input type="text" id="fileNameInput" placeholder="Enter file name (without extension)">
+<select id="fileType">
+    <option value="txt">Text File (.txt)</option>
+    <option value="md">Markdown File (.md)</option>
+</select>
+<!-- Save button -->
+<button id="save" onclick="saveText()">Save File</button>
+<!-- Initialize CodeMirror -->
+<script>
+    // Initialize CodeMirror with line numbers
+    const codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+        lineNumbers: true,
+        mode: "javascript"
+    });
+</script>
+
+<script>
+    function saveText() {
+        var textToSave = document.getElementById("inputBox").value;
+        var fileName = document.getElementById("fileNameInput").value;
+        var fileType = document.getElementById("fileType").value;
+
+        if (fileName.trim() === "") {
+            attempts++;
+            if (attempts >= 10) {
+                alert("If you mess around I'll steal your socks at 3am and you'll cry.");
+                return;
+            }
+            alert("Don't be lazy and pick a name bro.");
+            return;
+        }
+
+
+        var blob = new Blob([textToSave], { type: "text/plain;charset=utf-8" });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName + "." + fileType;
+        link.click();
+    }
+</script>
+<h4>Use GitHub and other coding platforms</h4>
+<p>We used these platforms for this site. We are not ready for rivalry with GitHub yet. We respect our elders.</p>
+<button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
+<script>
+    function createNewRepo() {
+        // Replace this URL with the URL of GitHub's new repository creation page
+        const githubNewRepoUrl = 'https://github.com/new';
+
+        // Open the URL in a new tab
+        window.open(githubNewRepoUrl, '_blank');
+    }
+</script>
+
+<button id="vscode" onclick="openVscode()">Open VS Code</button>
+
+<script>
+    function openVscode() {
+        const vscodeUrl = 'https://vscode.dev/';
+
+        // Open the URL in a new tab
+        window.open(vscodeUrl, '_blank');
+    }
+</script>
+
+<button id="AskChatGPT" onclick="chatgpt()">Ask ChatGPT about Coding</button>
+<script>
+    function chatgpt() {
+        // Replace this URL with the URL of GitHub's new repository creation page
+        const ChatGPTAsk = 'https://chat.openai.com/';
+
+        // Open the URL in a new tab
+        window.open(ChatGPTAsk, '_blank');
+    }
+</script>
+<button id="joinDiscord" onclick="discord()">Join our Discord Server</button>
+<script>
+    function discord() {
+        // Replace this URL with the URL of GitHub's new repository creation page
+        const discordServer = 'https://discord.gg/5EDEg7WWx8';
+
+        // Open the URL in a new tab
+        window.open(discordServer, '_blank');
+    }
+</script>
+    
+<h1>What is CodespaceMPT?</h1>
+<p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file or a .md file,
+    and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
+    We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site.</p>
+
+<h1>Learn Coding Easily</h1>
+<p>You may follow these tutorials from Coding with Mosh (not sponsored) to learn coding for your business or even when your bored!</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/W6NZfCO5SIk?si=e9VSnWlIKprzxV42" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/kqtD5dpn9C8?si=ecg304LryZUrJhBk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/qz0aGYrrlhU?si=h1s0OvFt1C8KDTbY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h1> Test a site </h1>
+<p> Note that you must be in light mode to use this. </p>
+<div class="container">
+    <div class="input-box">
+        <h2>Your HTML Code:</h2>
+        <textarea id="inputCode" rows="10"></textarea>
+        <button id="runButton" onclick="runCode()" onclick="runScript()">Run</button>
+    </div>
+    <div class="output-box">
+        <h2>Output:</h2>
+        <iframe id="outputFrame" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+</div>
+
+<script>
+    function runCode() {
+        var inputCode = document.getElementById('inputCode').value;
+        var outputFrame = document.getElementById('outputFrame').contentWindow.document;
+        outputFrame.open();
+        outputFrame.write(inputCode);
+        outputFrame.close();
+    }
+</script>
+<br><br><br><br><br><br><br><br>
+
+<h1>Practice Exercises</h1>
+
+<div class="exercise">
+  <h2>Exercise 1 - HTML</h2>
+  <p>Create an ordered list (ol) with three items that describe your hobbies.</p>
+  <ol id="html-output"></ol>
+  <input type="text" id="html-input" placeholder="Type here your HTML code">
+  <button onclick="runHTML()">Run</button>
+  <div class="output" id="html-result"></div>
+</div>
+
+<div class="exercise">
+  <h2>Exercise 2 - JavaScript</h2>
+  <p>Write a function in JavaScript that adds two numbers and returns the result.</p>
+  <input type="text" id="js-input" placeholder="Type here your JavaScript code">
+  
+  <button onclick="runJS()">Run</button>
+  <div class="output" id="js-result"></div>
+</div>
+<script>
+  function runHTML() {
+    var htmlCode = document.getElementById("html-input").value;
+    var olElement = document.createElement('ol');
+    olElement.innerHTML = htmlCode;
+    var listItems = olElement.querySelectorAll('li');
+    if (listItems.length >= 3) {
+      document.getElementById("html-output").innerHTML = htmlCode;
+      document.getElementById("html-result").innerText = "You did it!";
+    } else {
+      document.getElementById("html-result").innerText = "Try again. Be sure to include at least three items using <li>.";
+    }
+  }
+
+  function runJS() {
+    var jsCode = document.getElementById("js-input").value;
+    try {
+      eval(jsCode);
+      document.getElementById("js-result").innerText = "You did it!";
+    } catch (error) {
+      document.getElementById("js-result").innerText = "Try again.";
+    }
+  }
+</script>
+<p> This is version 1.13.0 </p>
+<h1>Learn CodespaceMPT</h1>
+<div class="learnMPT">
+    <h1>Learn how to use CodespaceMPT</h1>
+    <p>Write a simple HTML site making a Hello World message then saving it easily using the file saver.</p>
+    <button id="html-tutorial" class="html-tutorial" onclick="starthtml()">Start now!</button>
+    <script>
+var htmlTutorialClicked = false; // Global variable to track if HTML tutorial button is clicked
+var firstMessageShown = false; // Global variable to track if the first message is shown
+
+// Function to handle the HTML tutorial button click
+function starthtml() {
+    if (!firstMessageShown) {
+        alert("Go to the HTML site tester and make a header for the message 'Hello World!'. Doesn't need to be fancy, just a simple message");
+        firstMessageShown = true; // Set the flag to true after showing the first message
+    }
+    htmlTutorialClicked = true; // Set the flag to true when HTML tutorial is clicked
+}
+
+// Event listener for the Run button
+document.getElementById("runButton").addEventListener("click", function() {
+    // Check if the HTML tutorial button has been clicked before showing the alert
+    if (htmlTutorialClicked) {
+        alert("Now copy your code, put it on the notes/coding box, name it, and save it as a .txt file.");
+    }
+});
+
+// Event listener for the HTML tutorial button
+document.getElementById("html-tutorial").addEventListener("click", starthtml);
+
+     </script>
+</div>
+<div class="learnMPT">
+    <h1>Learn how to write notes or READMEs</h1>
+    <p>Make a simple README similar to a GitHub one which you can also export to GitHub and make it public.</p>
+    <button class="readme-tutorial" onclick="startreadme()">Start now!</button>
+    <script>
+        var readmeClicked = false; // Global variable to track if README tutorial button is clicked
+        var readmeMessageShown = false; // Global variable to track if the first message for README is shown
+    
+        function startreadme() {
+            if (!readmeMessageShown) {
+                alert("Go to the notes box and write a README for a JavaScript terminal. Once you're done, click Enter.");
+                readmeMessageShown = true; // Set the flag to true after showing the first message
+            }
+            readmeClicked = true; // Set the flag to true when README tutorial is clicked
+        }
+    
+        function checkKeyPress(event) {
+            if (event.keyCode === 13 && readmeClicked) { // Check if Enter key is pressed and README tutorial button is clicked
+                alert("Now name your file README, save it as a .md file, and click on the save button! It's as easy as that!");
+            }
+        }
+    
+        document.addEventListener("keypress", checkKeyPress); // Add event listener for keypress
+    </script>
+    </br>
+    <div class="learnMPT">
+    <h1>Learn how to use the DevTools console</h1>
+    <p>Simply just go to F12 and go to console, then type "sum(number,number)" and see what happens! (where it says number type two numbers. example: "sum(2,2)")</p>
+</div>
+    <script type="application/javascript">
+(function(w,d,s,o,f,js,fjs){w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments);};(js=d.createElement(s)),(fjs=d.getElementsByTagName(s)[0]);js.id=o;js.src=f;js.async=1;js.referrerPolicy = "origin";fjs.parentNode.insertBefore(js,fjs);})(window,document,"script","copilot","https://script.copilot.live/v1/copilot.min.js?tkn=cat-3m78e5kv");
+copilot("init",{});
+</script>
+</body>
+</html>
+    
