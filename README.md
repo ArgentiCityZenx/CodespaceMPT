@@ -1,36 +1,17 @@
 
+![CodespaceMPT](https://github.com/ninjalandia/CodespaceMPT/assets/159217501/6d29d0ea-615f-4fc8-bc59-763b26d15d3b)
 
-# We have made a new coding site. And here is how we did it.
+[![GitHub stars](https://img.shields.io/github/stars/ninjalandia/CodespaceMPT.svg)](https://github.com/ninjalandia/CodespaceMPT/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/ninjalandia/CodespaceMPT.svg)](https://github.com/ninjalandia/CodespaceMPT/network)
+[![GitHub views](https://komarev.com/ghpvc/?username=ninjalandia&label=Views)](https://github.com/ninjalandia/CodespaceMPT)
+[![License](https://img.shields.io/github/license/Z4nzu/hackingtool)](https://github.com/Z4nzu/hackingtool/blob/master/LICENSE)
 
-We first used ChatGPT to write us a simple coding site. Then, we fixed some issues in the code since ChatGPT made it difficult to make a coding site.
-Next, we added our logo and we finished! This is our former list:
+# Introducing CodespaceMPT
 
-* Add a mascot and a new name √ (easy)
-* Add a terminal that works √ (easy)
-* Make it so that you can save your code √ (hard)
-* Add an option to select what kind of file you want to make it as √ (medium)
+We have made a coding site for business and for entertainment. We have a lot of things!
 
-And this is ours now!
+## HTML Testing
 
-* Add an AI helper (hard)
-* Add an option to add a repo in GitHub √ (easy)
-* Add a new logo (easy)
-* Rework layout (medium) 
+You can write your code in a code box and even test it in a different page! Note that things like CodeMirror won't work and you might need to use the frame to see your code.
 
-## How does the terminal work?
 
-It works with a few commands. 
-
-| Terminal cmd | What it does           |
-|  ----------- | ---------------------- |
-| echo message | repeats message        |
-| rip          | gets ip address        |
-| help         | shows the list of cmds |
-| color #custom| custom color for txt >_|
-| device       | displays device info   |
-
-We made an easter egg for you to find out!
-
-### Why make a coding site?
-
-The other day, I was bored and decided to make a "simple" site, which turned into a mini GitHub in GitHub pages which will turn into a major developing company which will give me sanctions which will make me cash...
