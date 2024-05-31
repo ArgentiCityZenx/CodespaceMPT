@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashboardMPT</title>
+    <!-- Include CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+    <!-- Include CodeMirror JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <!-- Include appropriate CodeMirror mode (e.g., JavaScript) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-emmet.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/codemirror.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/javascript/javascript.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/xml/xml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/css/css.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/htmlmixed/htmlmixed.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/clike/clike.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/python/python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/markdown/markdown.min.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        body {
+            font-family: Arial, sans serif;
+            background-color: #000000;
+            text-align: left;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+   
+        #codeArea {
+            width: 100%;
+            height: 500px;
+        }
+        .CodeMirror {
+            height: 500px;
+        }
+    #output {
+        width: 100%;
+        height: 400px;
+        border: 1px solid #ccc;
+    }
+        
+        #countdown-box {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: none;
+        }
+
+        .hide {
+            display: none;
+        }
+
+
+        #theme-button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #414080;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #theme-button:hover {
+            background-color: #393870;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            background-color: #000;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #000;
+            color: #f0f0f0;
+        }
+
+        select {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #000;
+            color: #f0f0f0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #saveButton {
+                        padding: 10px 20px;
+            background-color: orange;
+                        color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #createRepoButton {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #0A8047;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #vscode {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #2288ca;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #AskChatGPT {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #11b289; /* Color verde */
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #save {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #e4b62c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #clock {
+            font-size: 3em;
+        }
+        
+        #joinDiscord {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #5065f6; /* Color blue */
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    textarea {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+    }
+    .exercise {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    background-color: #000000;
+  }
+  .output {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+    text-emphasis-color: black;
+  }
+  .image {
+    width: 50px;
+    height: 50px;
+}
+.learnMPT {
+    background-color: #242323;
+    position: inherit;
+    width: 300px;
+    height: 300px;
+    color: white;
+    float: left;
+}
+.html-tutorial {
+     margin: auto;
+    background-color: #3a5ed4;
+    padding: 30px 60px;
+    font-size: large;
+    color: white;
+}
+.readme-tutorial {
+      margin: auto;
+    background-color: #3a5ed4;
+    padding: 30px 60px;
+    font-size: large;
+    color: white;
+}
+
+        .terminal {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #000000;
+    border: 2px solid #0f0;
+    padding: 10px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    height: 300px;
+    color: #0f0;
+}
+
+        .container-bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.devtools {
+    flex-basis: 48%;
+    background-color: #242323;
+    color: white;
+    padding: 11px;
+    width: 280px;
+    height: 280px;
+    position: inherit;
+}
+.we {
+    flex-basis: 48%;
+    background-color: #242323;
+    color: white;
+    padding: 11px;
+    width: 280px;
+    height: 280px;
+    position: inherit;
+}
+
+@media (max-width: 768px) {
+    .container-bottom {
+        flex-direction: column;
+    }
+
+    .we, .devtools {
+        flex-basis: 100%;
+    }
+}
+
+        /* cdsgfs */
+
+        .input-cmd{
+            width: 80%; max-width: 600px; margin: auto; background-color: #000;
+        }
+.input-cmd::placeholder {
+    color: #0f0;
+}
+
+.command {
+    color: #0f0;
+}
+        #editor {
+        width: 100%;
+        height: 800px;
+    }
+    #output {
+        width: 100%;
+        height: 1000px;
+        border: 1px solid #ccc;
+    }
+        
+        #code-editor {
+            width: 200px;
+            height: 100px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+        }
+
+        
+        .coding-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 600px;
+            margin: 0 auto;
+        }
+        #paste-area {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            color: white;
+        }
+        #save-button {
+            background-color: orange;
+        }
+         .coding-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .CodeMirror {
+            height: 400px; /* Set height for CodeMirror editor */
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="clock">
+    <span id="datetime"></span>
+<script>
+        function sum(a,b)
+        {
+            let result = a + b;
+            alert("The result of the sum is " + result);
+        }
+</script>
+    <script>
+        // create a function to update the date and time
+        function updateDateTime() {
+            // create a new `Date` object
+            const now = new Date();
+
+            // get the current date and time as a string
+            const currentDateTime = now.toLocaleString();
+
+            // update the `textContent` property of the `span` element with the `id` of `datetime`
+            document.querySelector('#datetime').textContent = currentDateTime;
+        }
+
+        // call the `updateDateTime` function every second
+        setInterval(updateDateTime, 1000);
+    </script>
+</div>
+<h1>CodespaceMPT Homepage</h1>
+<h4>Run "Help" to see what commands you can run in the terminal console below</h4>
+
+<iframe src="https://ninjalandia.github.io/CodespaceMPT/api/embed-terminal.html" width="100%" height="500" frameborder="0"></iframe>
+
+
+<button id="theme-button" onclick="toggleTheme()">Theme</button>
+<script>    
+    let darkTheme = true;
+
+function toggleTheme() {
+    const body = document.body;
+    darkTheme = !darkTheme;
+    if (darkTheme) {
+        body.style.backgroundColor = '#000000';
+        body.style.color = '#ffffff';
+    } else {
+        body.style.backgroundColor = '#ffffff';
+        body.style.color = '#000000';
+    }
+}
+</script>
+<br>
+<h1>Start writing code</h1>
+Choose the coding box language <select id="languageSelect" onchange="changeMode()">
+    <option value="text/x-csrc">C</option>
+    <option value="text/x-c++src">C++</option>
+    <option value="text/x-csharp">C#</option>
+    <option value="text/x-python">Python</option>
+    <option value="text/javascript">JavaScript</option>
+    <option value="text/css">CSS</option>
+    <option value="text/html">HTML</option>
+    <option value="text/x-markdown">Markdown</option>
+  </select>
+  
+  <textarea id="codeArea" rows="10" cols="50"></textarea>
+  
+  <input type="text" id="fileName" placeholder="Enter file name">
+  
+ Save your file as  <select id="extensionSelect">
+    <option value="txt">.txt</option>
+    <option value="html">.html</option>
+    <option value="js">.js</option>
+    <option value="css">.css</option>
+    <option value="md">.md</option>
+    <option value="java">.java</option>
+    <option value="py">.py</option>
+    <option value="cpp">.cpp</option>
+    <option value="c">.c</option>
+    <option value="cs">.cs</option>
+    <option value="php">.php</option>
+    <option value="rb">.rb</option>
+    <option value="xml">.xml</option>
+    <option value="json">.json</option>
+    <option value="sql">.sql</option>
+    <option value="sh">.sh</option>
+    <option value="perl">.pl</option>
+    <option value="swift">.swift</option>
+    <option value="go">.go</option>
+    <option value="lua">.lua</option>
+    <option value="r">.r</option>
+    <option value="scala">.scala</option>
+    <option value="typescript">.ts</option>
+    <option value="rust">.rs</option>
+  </select>
+  
+  <button id="save-button" onclick="saveFile()">Save</button>
+  
+  <script>
+  var codeEditor = CodeMirror.fromTextArea(document.getElementById("codeArea"), {
+    lineNumbers: true,
+    mode: "text/x-csrc",
+    theme: "default",
+    indentUnit: 4,
+  });
+  
+  function changeMode() {
+    var lang = document.getElementById("languageSelect").value;
+    codeEditor.setOption("mode", lang);
+  }
+  
+  function saveFile() {
+    var lang = document.getElementById("languageSelect").value.split('/')[1];
+    var code = codeEditor.getValue();
+    var extension = document.getElementById("extensionSelect").value;
+    var fileName = document.getElementById("fileName").value || "file";
+    fileName = fileName.replace(/\.[^/.]+$/, '') + "." + extension; // Ensure file name has correct extension
+    
+    var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, fileName);
+  }
+  
+  // Save As Functionality (credit: Eli Grey)
+  function saveAs(blob, fileName) {
+    var url = window.URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.style.display = "none";
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+  </script>
+  
+    <h1>Start writing HTML</h1>
+    Just click on this button for copy a simple and good for start HTML structure <br> <br>
+    <button id="htmlCode" onclick="copyCode()">Copy HTML Code</button>
+
+    <script>
+        function copyCode() {
+            // Crea un área de texto temporal para copiar el contenido del código HTML
+            var tempInput = document.createElement("textarea");
+            tempInput.value = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            </head>
+            <body>
+    
+            </body>
+            </html>`;
+            document.body.appendChild(tempInput);
+
+            tempInput.select();
+            document.execCommand("copy");
+
+            document.body.removeChild(tempInput);
+
+            alert("HTML code copied!");
+        }
+    </script>
+<h1>What is CodespaceMPT?</h1>
+<p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file, py file, js file, html file, css file or a .md file,
+    and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
+    We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site. We also made a MarkDown and Python editor, and an HTML site tester!</p>
+
+<h1>Learn Coding in an hour or two</h1>
+<p>You may follow these tutorials from Coding with Mosh to learn coding for your business or even when your bored!</p>
+    <center>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/W6NZfCO5SIk?si=e9VSnWlIKprzxV42" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/kqtD5dpn9C8?si=ecg304LryZUrJhBk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/qz0aGYrrlhU?si=h1s0OvFt1C8KDTbY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/d56mG7DezGs?si=aLoQYaNgdCm0oRe5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/ZzaPdXTrSb8?si=Y1UP2_s0ynTiepZm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/TlB_eWDSMt4?si=7qAkaTXeqClflgb0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/8JJ101D3knE?si=YLHtXA28uuAUrrrX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/gfkTfcpWqAY?si=zTRRDL-jdjugNENV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/eIrMbAQSU34?si=Gk-4ci3qaW21gChZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </center>
+<h1>HTML Site Testing</h1>
+<p>This box acts like a localhost, you input code and it will run automically without the need to click a button to run like last time. If this box is too small, click the button below the iframe (output) to access it somewhere else! (Note that you have to be in the White Theme for use this. You can change the theme by clicking on the Theme Button)</p>
+<div id="editor" style="height: 300px; width: 100%;"></div><br>
+    <iframe id="output" style="width: 100%; height: 300px;"></iframe>
+    <form id="testForm">
+        <button type="submit">Test HTML on Separate Page</button>
+    </form>
+
+    <script>
+        // Initialize Ace Editor
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/twilight");
+        editor.session.setMode("ace/mode/html");
+        editor.setOption("enableEmmet", true);
+
+        // Function to run code and display in iframe
+        function runCode() {
+            var code = editor.getValue();
+            localStorage.setItem('htmlContent', code);
+            var iframe = document.getElementById("output");
+            iframe.srcdoc = code;
+        }
+
+        // Update iframe content on editor input
+        editor.on("input", function() {
+            runCode();
+        });
+
+        // Store content and redirect on form submission
+        document.getElementById('testForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var htmlContent = editor.getValue();
+            localStorage.setItem('htmlContent', htmlContent);
+            window.location.href = '../3000/index.html?timestamp=' + new Date().getTime();
+        });
+
+        // Run code initially to display content in iframe
+        runCode();
+    </script>
+<h1>Markdown Editor</h1>
+<p>We also have a Markdown editor for notes, software README's, or just for fun. Click below to try it!</p>
+    <button id="tryMarkdown" onclick="tryIt()">Try It</button>
+<script>
+    function tryIt() {
+        // Replace this URL with the URL of GitHub's new repository creation page
+        const tryItUrl = 'https://ninjalandia.github.io/CodespaceMPT/markdown-editor/' // Open the URL in a new tab
+        window.open(tryItUrl, '_blank');
+    }
+</script>
+<h1>Python Tester</h1>
+<p>Just when it seemed like nothing could get better, you found out that we have a Python tester too! Click below to try it out.</p>
+    <button id="tryPython" onclick="tryPy()">Try It</button>
+<script>
+    function tryPy() {
+        // Replace this URL with the URL of GitHub's new repository creation page
+        const tryPyUrl = 'https://ninjalandia.github.io/CodespaceMPT/python-tester/' // Open the URL in a new tab
+        window.open(tryPyUrl, '_blank');
+    }
+</script>
+<br>
+
+<h1>Practice Exercises</h1>
+
+<div class="exercise">
+  <h2>Exercise 1 - HTML</h2>
+  <p>Create an ordered list (ol) with three items that describe your hobbies.</p>
+  <ol id="html-output"></ol>
+  <input type="text" id="html-input" placeholder="Type here your HTML code">
+  <button onclick="runHTML()">Run</button>
+  <div class="output" id="html-result"></div>
+</div>
+
+<div class="exercise">
+  <h2>Exercise 2 - JavaScript</h2>
+  <p>Write a function in JavaScript that adds two numbers and returns the result.</p>
+  <input type="text" id="js-input" placeholder="Type here your JavaScript code">
+  <button onclick="runJS()">Run</button>
+  <div class="output" id="js-result"></div>
+</div>
+
+<script>
+  function runHTML() {
+    var htmlCode = document.getElementById("html-input").value;
+    var olElement = document.createElement('ol');
+    olElement.innerHTML = htmlCode;
+    var listItems = olElement.querySelectorAll('li');
+    if (listItems.length >= 3) {
+      document.getElementById("html-output").innerHTML = htmlCode;
+      document.getElementById("html-result").innerText = "You did it!";
+    } else {
+      document.getElementById("html-result").innerText = "Try again. Be sure to include at least three items using <li>.";
+    }
+  }
+
+  function runJS() {
+    var jsCode = document.getElementById("js-input").value;
+    try {
+      eval(jsCode);
+      document.getElementById("js-result").innerText = "You did it!";
+    } catch (error) {
+      document.getElementById("js-result").innerText = "Try again.";
+    }
+  }
+
+</script>
+<p> This is version 1.19.0 </p>
+<h1>Learn how to use CodespaceMPT</h1>
+<div class="learnMPT">
+    <h1>Learn how to use CodespaceMPT</h1>
+    <p>Write a simple HTML site making a Hello World message then saving it easily using the file saver.</p>
+    <button id="html-tutorial" class="html-tutorial" onclick="starthtml()">Start now!</button>
+    <script>
+var htmlTutorialClicked = false; // Global variable to track if HTML tutorial button is clicked
+var firstMessageShown = false; // Global variable to track if the first message is shown
+
+// Function to handle the HTML tutorial button click
+function starthtml() {
+    if (!firstMessageShown) {
+        alert("Go to the HTML site tester and make a header for the message 'Hello World!'. Doesn't need to be fancy, just a simple message. Then, copy the code to the notes box and save it!");
+        firstMessageShown = true; // Set the flag to true after showing the first message
+    }
+    }
+     </script>
+</div>
+<div class="learnMPT">
+    <h1>Learn how to write notes or READMEs</h1>
+    <p>Make a simple README similar to a GitHub one which you can also export to GitHub and make it public.</p>
+    <button class="readme-tutorial" onclick="startreadme()">Start now!</button>
+    </div>
+    <script>
+        var readmeClicked = false; // Global variable to track if README tutorial button is clicked
+        var readmeMessageShown = false; // Global variable to track if the first message for README is shown
+    
+        function startreadme() {
+            if (!readmeMessageShown) {
+                alert("Go to the coding box and write a README for a JavaScript terminal. Then test it in the MarkDown editor. If It works well, go to the coding box again and save your README as README.md or other name.");
+                readmeMessageShown = true; // Set the flag to true after showing the first message
+            }
+            readmeClicked = true; // Set the flag to true when README tutorial is clicked
+        }
+    
+        document.addEventListener("keypress", checkKeyPress); // Add event listener for keypress
+    </script>
+    <div class="container-bottom">
+    <div class="devtools">
+        <h1>Learn how to use the DevTools console</h1>
+        <p>Simply just go to F12 and go to console, then type "sum(number,number)" and see what happens! (where it says number type two numbers. example: "sum(2,2)")</p>
+    </div>
+
+        <div class="we">
+            <h1>Yes, yes. All very nice but... Who are behind this?</h1>
+            <p>CodespaceMPT was created by two users, We are ArgentyCityzen, a teenage Argentinian coder and software developer, and Ninjalandia, a teenage American-Mexican coder. We met on PPC Discord’s server. Click the button below to read our wiki.
+            <button class="readme-tutorial" onclick="wiki()">Learn More about Us</button>
+<script>
+    function wiki() {
+        // Redirect the user to the wiki
+        const wiki = 'https://github.com/ninjalandia/CodespaceMPT/wiki/CodespaceMPT';
+
+        // Open the URL in a new tab
+        window.open(wiki, '_blank');
+    }
+</script></p>
+        </div>
+</div>
+    <br>
+<h1>APIs</h1>
+<p>We have <a href="https://ninjalandia.github.io/CodespaceMPT/api">APIs</a> for you to try. We have everything here. There are more things coming soon to CodespaceMPT and our API's!</p>
+</body>
+</html> 

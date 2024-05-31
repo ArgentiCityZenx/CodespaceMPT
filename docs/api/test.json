@@ -1,0 +1,18 @@
+function generateSecretKey() {
+    const prefix = "CODESPACEMPT:";
+    const keyLength = 24; // Length of the numeric part of the key
+    let key = '';
+
+    // Generate random digits for the key
+    for (let i = 0; i < keyLength; i++) {
+        key += Math.floor(Math.random() * 10);
+    }
+
+    // Combine prefix and the generated key
+    const secretKey = prefix + key;
+    return secretKey;
+}
+
+// Generate and log the secret key to the console
+const secretKey = generateSecretKey();
+console.log(secretKey);

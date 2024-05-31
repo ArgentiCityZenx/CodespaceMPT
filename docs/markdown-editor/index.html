@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        #mdeditor-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+
+        }
+
+        #mdeditor, #mdpreview {
+            flex: 1;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;  
+        }
+
+        #mdpreview {
+            background-color: #f0f0f0;
+        }
+
+        #update-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #update-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Markdown Editor</h2>
+
+    <div id="mdeditor-container">
+        <textarea id="mdeditor"></textarea>
+        <div id="mdpreview"></div>
+    </div>
+
+    <button id="update-btn">Update Preview</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.0.0/marked.min.js"></script>
+    <script>
+        const editor = CodeMirror.fromTextArea(document.getElementById('mdeditor'), {
+            mode: 'markdown',
+            lineNumbers: true,
+            autofocus: true,
+            extraKeys: { 'Ctrl-Space': 'autocomplete' }
+        });
+
+        const preview = document.getElementById('mdpreview');
+        const updateButton = document.getElementById('update-btn');
+
+        function updatePreview() {
+            const markdown = editor.getValue();
+            const html = marked(markdown);
+            preview.innerHTML = html;
+        }
+
+        editor.on('change', updatePreview);
+        updateButton.addEventListener('click', updatePreview);
+
+        // Initialize preview
+        updatePreview();
+    </script>
+</body>
+</html>
