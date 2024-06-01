@@ -394,7 +394,8 @@ function toggleTheme() {
 </script>
 <br>
 <h1>Start writing code</h1>
-Choose the coding box language <select id="languageSelect" onchange="changeMode()">
+<label for="languageSelect">Choose the coding box language:</label>
+<select id="languageSelect" onchange="changeMode()">
     <option value="text/x-csrc">C</option>
     <option value="text/x-c++src">C++</option>
     <option value="text/x-csharp">C#</option>
@@ -403,13 +404,17 @@ Choose the coding box language <select id="languageSelect" onchange="changeMode(
     <option value="text/css">CSS</option>
     <option value="text/html">HTML</option>
     <option value="text/x-markdown">Markdown</option>
-  </select>
-  
-  <textarea id="codeArea" rows="10" cols="50"></textarea>
-  
-  <input type="text" id="fileName" placeholder="Enter file name">
-  
- Save your file as  <select id="extensionSelect">
+    <option value="text/x-sh">Shell</option>
+    <option value="text/x-rustsrc">Rust</option>
+    <option value="text/x-go">Go</option>
+</select>
+<br><br>
+<textarea id="codeArea"></textarea>
+<br>
+<input type="text" id="fileName" placeholder="Enter file name">
+<br><br>
+<label for="extensionSelect">Save your file as:</label>
+<select id="extensionSelect">
     <option value="txt">.txt</option>
     <option value="html">.html</option>
     <option value="js">.js</option>
@@ -426,7 +431,7 @@ Choose the coding box language <select id="languageSelect" onchange="changeMode(
     <option value="json">.json</option>
     <option value="sql">.sql</option>
     <option value="sh">.sh</option>
-    <option value="perl">.pl</option>
+    <option value="pl">.pl</option>
     <option value="swift">.swift</option>
     <option value="go">.go</option>
     <option value="lua">.lua</option>
@@ -434,46 +439,53 @@ Choose the coding box language <select id="languageSelect" onchange="changeMode(
     <option value="scala">.scala</option>
     <option value="typescript">.ts</option>
     <option value="rust">.rs</option>
-  </select>
-  
-  <button id="save-button" onclick="saveFile()">Save</button>
-  
-  <script>
-  var codeEditor = CodeMirror.fromTextArea(document.getElementById("codeArea"), {
-    lineNumbers: true,
-    mode: "text/x-csrc",
-    theme: "default",
-    indentUnit: 4,
-  });
-  
-  function changeMode() {
-    var lang = document.getElementById("languageSelect").value;
-    codeEditor.setOption("mode", lang);
-  }
-  
-  function saveFile() {
-    var lang = document.getElementById("languageSelect").value.split('/')[1];
-    var code = codeEditor.getValue();
-    var extension = document.getElementById("extensionSelect").value;
-    var fileName = document.getElementById("fileName").value || "file";
-    fileName = fileName.replace(/\.[^/.]+$/, '') + "." + extension; // Ensure file name has correct extension
-    
-    var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, fileName);
-  }
-  
-  // Save As Functionality (credit: Eli Grey)
-  function saveAs(blob, fileName) {
-    var url = window.URL.createObjectURL(blob);
-    var a = document.createElement("a");
-    a.style.display = "none";
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-  }
-  </script>
+</select>
+<br><br>
+<button id="save-button" onclick="saveFile()">Save</button>
+
+<script>
+    // Function to initialize CodeMirror
+    var codeEditor = CodeMirror.fromTextArea(document.getElementById("codeArea"), {
+        lineNumbers: true,
+        mode: "text/x-csrc",
+        theme: "default",
+        indentUnit: 4,
+    });
+
+    function changeMode() {
+        var lang = document.getElementById("languageSelect").value;
+        codeEditor.setOption("mode", lang);
+    }
+
+    function saveFile() {
+        var lang = document.getElementById("languageSelect").value.split('/')[1];
+        var code = codeEditor.getValue();
+        var extension = document.getElementById("extensionSelect").value;
+        var fileName = document.getElementById("fileName").value.trim();
+
+        if (!fileName) {
+            alert("Don't be lazy and pick a name bro");
+            return;
+        }
+
+        fileName = fileName.replace(/\.[^/.]+$/, '') + "." + extension; // Ensure file name has correct extension
+        
+        var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, fileName);
+    }
+
+    // Save As Functionality (credit: Eli Grey)
+    function saveAs(blob, fileName) {
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
+</script>
   
     <h1>Start writing HTML</h1>
     Just click on this button for copy a simple and good for start HTML structure <br> <br>
