@@ -339,7 +339,13 @@
         .CodeMirror {
             height: 400px; /* Set height for CodeMirror editor */
         }
-
+        #dropZone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            width: 1200px;
+            text-align: center;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -442,6 +448,10 @@ function toggleTheme() {
 </select>
 <br><br>
 <button id="save-button" onclick="saveFile()">Save</button>
+<br><br>
+<input type="file" id="fileInput" style="display:none;" onchange="loadFile()">
+<label>Or drag and drop your file here:</label>
+<center><div id="dropZone">Drop your file here</div></center>
 
 <script>
     // Function to initialize CodeMirror
@@ -485,8 +495,56 @@ function toggleTheme() {
         a.click();
         window.URL.revokeObjectURL(url);
     }
+
+    // Load file into CodeMirror
+    function loadFile() {
+        var fileInput = document.getElementById("fileInput");
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            codeEditor.setValue(e.target.result);
+        }
+
+        reader.readAsText(file);
+    }
+
+    // Drag and drop functionality
+    var dropZone = document.getElementById("dropZone");
+
+    dropZone.addEventListener("dragover", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.style.backgroundColor = "#e1e7ff";
+    });
+
+    dropZone.addEventListener("dragleave", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.style.backgroundColor = "#ffffff";
+    });
+
+    dropZone.addEventListener("drop", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.style.backgroundColor = "#ffffff";
+        
+        var files = e.dataTransfer.files;
+        var file = files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            codeEditor.setValue(e.target.result);
+        }
+
+        reader.readAsText(file);
+    });
+
+    // Make drop zone clickable
+    dropZone.addEventListener("click", function() {
+        document.getElementById("fileInput").click();
+    });
 </script>
-  
     <h1>Start writing HTML</h1>
     Just click on this button for copy a simple and good for start HTML structure <br> <br>
     <button id="htmlCode" onclick="copyCode()">Copy HTML Code</button>
