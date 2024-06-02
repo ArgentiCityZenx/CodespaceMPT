@@ -575,11 +575,46 @@ function toggleTheme() {
             alert("HTML code copied!");
         }
     </script>
+    <h4>Use GitHub and other coding platforms</h4>
+    <p>We used these platforms for this site. Try them out!</p>
+    <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
+    <script>
+        function createNewRepo() {
+            // Replace this URL with the URL of GitHub's new repository creation page
+            const githubNewRepoUrl = 'https://github.com/new';
+    
+            // Open the URL in a new tab
+            window.open(githubNewRepoUrl, '_blank');
+        }
+    </script>
+    
+    <button id="vscode" onclick="openVscode()">Open VS Code</button>
+    
+    <script>
+        function openVscode() {
+            const vscodeUrl = 'https://vscode.dev/';
+    
+            // Open the URL in a new tab
+            window.open(vscodeUrl, '_blank');
+        }
+    </script>
+    
+    <button id="AskChatGPT" onclick="chatgpt()">Ask ChatGPT about Coding</button>
+    <script>
+        function chatgpt() {
+            // Replace this URL with the URL of GitHub's new repository creation page
+            const ChatGPTAsk = 'https://chat.openai.com/';
+    
+            // Open the URL in a new tab
+            window.open(ChatGPTAsk, '_blank');
+        }
+    </script>
 <h1>What is CodespaceMPT?</h1>
 <p>CodespaceMPT is a coding playground that has the option to write code, save it as a .txt file, py file, js file, html file, css file or a .md file,
     and make a new repository in GitHub. It also has a built-in terminal with several commands and easter eggs.
     We have used AI to write us a simple base site and we fixed it by adding buttons and fixing things in the site. We also made a MarkDown and Python editor, and an HTML site tester!</p>
-
+    <h1>Join our Discord Server!</h1>
+    <iframe src="https://discord.com/widget?id=1222646912834994358&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 <h1>Learn Coding in an hour or two</h1>
 <p>You may follow these tutorials from Coding with Mosh to learn coding for your business or even when your bored!</p>
     <center>
