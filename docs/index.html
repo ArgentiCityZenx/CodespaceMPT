@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CodespaceMPT Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/monokai.min.css" id="theme">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: "Inter", sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .CodeMirror {
+            height: 500px;
+        }
+
+        #dropZone {
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        button, select {
+            background-color: red;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, select:hover {
+            background-color: #555;
+        }
+
+        button:focus, select:focus {
+            outline: none;
+        }      
+          #save-button {
+            background-color: orange;
+        }
+         .coding-box {
+            max-width: 8000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .CodeMirror {
+            height: 400px; /* Set height for CodeMirror editor */
+        }
+        #dropZone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            width: 1200px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #createRepoButton {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #0A8047;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #vscode {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #2288ca;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #AskChatGPT {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #11b289; /* Color verde */
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .learnMPT {
+    background-color: #242323;
+    position: inherit;
+    width: 300px;
+    height: 300px;
+    color: white;
+    float: left;
+}
+.html-tutorial {
+     margin: auto;
+    background-color: #3a5ed4;
+    padding: 30px 60px;
+    font-size: large;
+    color: white;
+}
+.readme-tutorial {
+      margin: auto;
+    background-color: #3a5ed4;
+    padding: 30px 60px;
+    font-size: large;
+    color: white;
+}
+
+        .terminal {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #000000;
+    border: 2px solid #0f0;
+    padding: 10px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    height: 300px;
+    color: #0f0;
+}
+
+        .container-bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.devtools {
+    flex-basis: 48%;
+    background-color: #242323;
+    color: white;
+    padding: 11px;
+    width: 280px;
+    height: 280px;
+    position: inherit;
+}
+.we {
+    flex-basis: 48%;
+    background-color: #242323;
+    color: white;
+    padding: 11px;
+    width: 280px;
+    height: 400px;
+    position: inherit;
+}
+.exercise {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: white;
+    background-color: #000000;
+  }
+  .output {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+    text-emphasis-color: black;
+  }
+@media (max-width: 768px) {
+    .container-bottom {
+        flex-direction: column;
+    }
+
+    .we, .devtools {
+        flex-basis: 100%;
+    }
+}
+
+        /* cdsgfs */
+
+        .input-cmd{
+            width: 80%; max-width: 600px; margin: auto; background-color: #000;
+        }
+.input-cmd::placeholder {
+    color: #0f0;
+}
+    </style>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/css/css.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/markdown/markdown.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/shell/shell.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/rust/rust.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/go/go.js"></script>
+</head>
+<body>
+    <script>
+        function sum(a,b)
+        {
+            let result = a + b;
+            alert("The result of the sum is " + result);
+        }
+</script>
+    <div id="clock">
+        <span id="datetime"></span>
+        <script>
+            // create a function to update the date and time
+            function updateDateTime() {
+                // create a new `Date` object
+                const now = new Date();
+    
+                // get the current date and time as a string
+                const currentDateTime = now.toLocaleString();
+    
+                // update the `textContent` property of the `span` element with the `id` of `datetime`
+                document.querySelector('#datetime').textContent = currentDateTime;
+            }
+    
+            // call the `updateDateTime` function every second
+            setInterval(updateDateTime, 1000);
+        </script>
+      </div>
+   <h1>CodespaceMPT Pro</h1>
+   <h1>Start writing code</h1>
+   <p>Choose the coding box language</p>
+   <select id="languageSelect" onchange="changeMode()">
+       <option value="text/x-csrc">C</option>
+       <option value="text/x-c++src">C++</option>
+       <option value="text/x-csharp">C#</option>
+       <option value="text/x-python">Python</option>
+       <option value="text/javascript">JavaScript</option>
+       <option value="text/css">CSS</option>
+       <option value="text/html">HTML</option>
+       <option value="text/x-markdown">Markdown</option>
+       <option value="text/x-sh">Shell</option>
+       <option value="text/x-rustsrc">Rust</option>
+       <option value="text/x-go">Go</option>
+   </select>
+   <textarea id="codeArea"></textarea>
+   <br>
+   <input type="text" id="fileName" placeholder="Enter file name">
+   <p>Save your file as</p>
+<select id="extensionSelect">
+       <option value="txt">.txt</option>
+       <option value="html">.html</option>
+       <option value="js">.js</option>
+       <option value="css">.css</option>
+       <option value="md">.md</option>
+       <option value="java">.java</option>
+       <option value="py">.py</option>
+       <option value="cpp">.cpp</option>
+       <option value="c">.c</option>
+       <option value="cs">.cs</option>
+       <option value="php">.php</option>
+       <option value="rb">.rb</option>
+       <option value="xml">.xml</option>
+       <option value="json">.json</option>
+       <option value="sql">.sql</option>
+       <option value="sh">.sh</option>
+       <option value="pl">.pl</option>
+       <option value="swift">.swift</option>
+       <option value="go">.go</option>
+       <option value="lua">.lua</option>
+       <option value="r">.r</option>
+       <option value="scala">.scala</option>
+       <option value="typescript">.ts</option>
+       <option value="rust">.rs</option>
+   </select>
+   <button id="save-button" onclick="saveFile()">Save</button>
+   <input type="file" id="fileInput" style="display:none;" onchange="loadFile()">
+   <p>Or drag and drop your file here</p>
+   <center><div id="dropZone">Drop your file here</div></center>
+
+   <script>
+       var attemptCount = 0; // Initialize attempt count
+
+       // Function to initialize CodeMirror
+       var codeEditor = CodeMirror.fromTextArea(document.getElementById("codeArea"), {
+           lineNumbers: true,
+           mode: "text/x-csrc",
+           theme: "default",
+           indentUnit: 4,
+       });
+
+       function changeMode() {
+           var lang = document.getElementById("languageSelect").value;
+           codeEditor.setOption("mode", lang);
+       }
+
+       function saveFile() {
+           var code = codeEditor.getValue();
+           var extension = document.getElementById("extensionSelect").value;
+           var fileName = document.getElementById("fileName").value.trim();
+
+           if (!fileName) {
+               attemptCount++; // Increment attempt count
+
+               if (attemptCount < 10) {
+                   alert("Don't be lazy and pick a name bro");
+               } else {
+                   alert("If you mess around I'll steal your socks at 3 PM and you will cry");
+               }
+               return;
+           }
+
+           fileName = fileName.replace(/\.[^/.]+$/, '') + "." + extension; // Ensure file name has correct extension
+           
+           var blob = new Blob([code], {type: "text/plain;charset=utf-8"});
+           saveAs(blob, fileName);
+       }
+
+       // Save As Functionality (credit: Eli Grey)
+       function saveAs(blob, fileName) {
+           var url = window.URL.createObjectURL(blob);
+           var a = document.createElement("a");
+           a.style.display = "none";
+           a.href = url;
+           a.download = fileName;
+           document.body.appendChild(a);
+           a.click();
+           window.URL.revokeObjectURL(url);
+       }
+
+       // Load file into CodeMirror
+       function loadFile() {
+           var fileInput = document.getElementById("fileInput");
+           var file = fileInput.files[0];
+           var reader = new FileReader();
+
+           reader.onload = function(e) {
+               codeEditor.setValue(e.target.result);
+           }
+
+           reader.readAsText(file);
+       }
+
+       // Drag and drop functionality
+       var dropZone = document.getElementById("dropZone");
+
+       dropZone.addEventListener("dragover", function(e) {
+           e.preventDefault();
+           e.stopPropagation();
+           dropZone.style.backgroundColor = "#e1e7ff";
+       });
+
+       dropZone.addEventListener("dragleave", function(e) {
+           e.preventDefault();
+           e.stopPropagation();
+           dropZone.style.backgroundColor = "#ffffff";
+       });
+
+       dropZone.addEventListener("drop", function(e) {
+           e.preventDefault();
+           e.stopPropagation();
+           dropZone.style.backgroundColor = "#ffffff";
+           
+           var files = e.dataTransfer.files;
+           var file = files[0];
+           var reader = new FileReader();
+
+           reader.onload = function(e) {
+               codeEditor.setValue(e.target.result);
+           }
+
+           reader.readAsText(file);
+       });
+
+       // Make drop zone clickable
+       dropZone.addEventListener("click", function() {
+           document.getElementById("fileInput").click();
+       });
+   </script>
+      <button style="background-color: purple;"  id="theme-button" onclick="toggleTheme()">Theme</button>
+      <script>    
+          let darkTheme = true;
+      
+      function toggleTheme() {
+          const body = document.body;
+          darkTheme = !darkTheme;
+          if (darkTheme) {
+              body.style.backgroundColor = '#000000';
+              body.style.color = '#ffffff';
+          } else {
+              body.style.backgroundColor = '#ffffff';
+              body.style.color = '#000000';
+          }
+      }
+      </script>
+        <h4>Use GitHub and other coding platforms</h4>
+        <p>We used these platforms for this site. Try them out!</p>
+        <button id="createRepoButton" onclick="createNewRepo()">Create New Repository in GitHub</button>
+        <script>
+            function createNewRepo() {
+                // Replace this URL with the URL of GitHub's new repository creation page
+                const githubNewRepoUrl = 'https://github.com/new';
+        
+                // Open the URL in a new tab
+                window.open(githubNewRepoUrl, '_blank');
+            }
+        </script>
+        
+        <button id="vscode" onclick="openVscode()">Open VS Code</button>
+        
+        <script>
+            function openVscode() {
+                const vscodeUrl = 'https://vscode.dev/';
+        
+                // Open the URL in a new tab
+                window.open(vscodeUrl, '_blank');
+            }
+        </script>
+        
+        <button id="AskChatGPT" onclick="chatgpt()">Ask ChatGPT about Coding</button>
+        <script>
+            function chatgpt() {
+                // Replace this URL with the URL of GitHub's new repository creation page
+                const ChatGPTAsk = 'https://chat.openai.com/';
+        
+                // Open the URL in a new tab
+                window.open(ChatGPTAsk, '_blank');
+            }
+        </script>
+    <h1>Terminal with the TermiX system.</h1>
+    <p>This terminal uses a JavaScript system for simulate some commands. We call it TermiX system!</p>
+    <iframe src="embed-terminal.html" width="100%" height="500" frameborder="0"></iframe>
+    <h1>Terminal for Git management.</h1>
+    <p>You can see files from a GitHub or GitLab repository. More commands are coming soon!</p>
+    <iframe src="terminal-git.html" style="width: 500px; height: 500px; border: rgba(0,0,0,0); display: block;"></iframe>
+    <h1>Python IDE Complier</h1>
+    <p>This Python IDE Complier tests code from Python and complies it. Try it out!</p>
+    <iframe src="pythonide.html" style="width: 100%; height: 500px;"></iframe>
+    <h1>Markdown Editor</h1>
+    <p>This Markdown Editor is to edit files that end in a .md. Try writing about your life here!</p>
+    <iframe src="markdown-editor.html" style="width: 100%; height: 500px;"></iframe>
+    <h1>Get APIs</h1>
+    <p>We are currently giving out our API keys. You can see them <a href="api/apis.html">here</a>. We even have an API in our console! Press F12 to see the message.</p>
+    <h1>Test HTML Sites</h1>
+    <p>We have improved our former HTML site tester.</p>
+    <iframe src="testsites.html" style="width: 100%; height: 1000px; background-color: #f9f9f9;"></iframe>
+    <script src="api/console-logging.json"></script><br><br>
+    <h1>Learn Coding in an hour or two</h1>
+<p>You may follow these tutorials from Coding with Mosh to learn coding for your business or even when your bored!</p>
+    <center>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/W6NZfCO5SIk?si=e9VSnWlIKprzxV42" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/kqtD5dpn9C8?si=ecg304LryZUrJhBk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/qz0aGYrrlhU?si=h1s0OvFt1C8KDTbY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/d56mG7DezGs?si=aLoQYaNgdCm0oRe5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/ZzaPdXTrSb8?si=Y1UP2_s0ynTiepZm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/TlB_eWDSMt4?si=7qAkaTXeqClflgb0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/8JJ101D3knE?si=YLHtXA28uuAUrrrX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/gfkTfcpWqAY?si=zTRRDL-jdjugNENV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/eIrMbAQSU34?si=Gk-4ci3qaW21gChZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </center><br><br>
+    <br>
+
+    <h1>Practice Exercises</h1>
+    
+    <div class="exercise">
+      <h2>Exercise 1 - HTML</h2>
+      <p>Create an ordered list (ol) with three items that describe your hobbies.</p>
+      <ol id="html-output"></ol>
+      <input type="text" id="html-input" placeholder="Type here your HTML code">
+      <button onclick="runHTML()">Run</button>
+      <div class="output" id="html-result"></div>
+    </div>
+    
+    <div class="exercise">
+      <h2>Exercise 2 - JavaScript</h2>
+      <p>Write a function in JavaScript that adds two numbers and returns the result.</p>
+      <input type="text" id="js-input" placeholder="Type here your JavaScript code">
+      <button onclick="runJS()">Run</button>
+      <div class="output" id="js-result"></div>
+    </div>
+    
+    <script>
+      function runHTML() {
+        var htmlCode = document.getElementById("html-input").value;
+        var olElement = document.createElement('ol');
+        olElement.innerHTML = htmlCode;
+        var listItems = olElement.querySelectorAll('li');
+        if (listItems.length >= 3) {
+          document.getElementById("html-output").innerHTML = htmlCode;
+          document.getElementById("html-result").innerText = "You did it!";
+        } else {
+          document.getElementById("html-result").innerText = "Try again. Be sure to include at least three items using <li>.";
+        }
+      }
+    
+      function runJS() {
+        var jsCode = document.getElementById("js-input").value;
+        try {
+          eval(jsCode);
+          document.getElementById("js-result").innerText = "You did it!";
+        } catch (error) {
+          document.getElementById("js-result").innerText = "Try again.";
+        }
+      }
+    
+    </script>
+    <p> This is version 1.19.0 </p>
+<h1>Learn how to use CodespaceMPT</h1>
+<div class="learnMPT">
+    <h1>Learn how to use CodespaceMPT</h1>
+    <p>Write a simple HTML site making a Hello World message then saving it easily using the file saver.</p>
+    <button id="html-tutorial" class="html-tutorial" onclick="starthtml()">Start now!</button>
+    <script>
+var htmlTutorialClicked = false; // Global variable to track if HTML tutorial button is clicked
+var firstMessageShown = false; // Global variable to track if the first message is shown
+
+// Function to handle the HTML tutorial button click
+function starthtml() {
+    if (!firstMessageShown) {
+        alert("Go to the HTML site tester and make a header for the message 'Hello World!'. Doesn't need to be fancy, just a simple message. Then, copy the code to the notes box and save it!");
+        firstMessageShown = true; // Set the flag to true after showing the first message
+    }
+    }
+     </script>
+</div>
+<div class="learnMPT">
+    <h1>Learn how to write notes or READMEs</h1>
+    <p>Make a simple README similar to a GitHub one which you can also export to GitHub and make it public.</p>
+    <button class="readme-tutorial" onclick="startreadme()">Start now!</button>
+    </div>
+    <script>
+        var readmeClicked = false; // Global variable to track if README tutorial button is clicked
+        var readmeMessageShown = false; // Global variable to track if the first message for README is shown
+    
+        function startreadme() {
+            if (!readmeMessageShown) {
+                alert("Go to the coding box and write a README for a JavaScript terminal. Then test it in the MarkDown editor. If It works well, go to the coding box again and save your README as README.md or other name.");
+                readmeMessageShown = true; // Set the flag to true after showing the first message
+            }
+            readmeClicked = true; // Set the flag to true when README tutorial is clicked
+        }
+    
+        document.addEventListener("keypress", checkKeyPress); // Add event listener for keypress
+    </script>
+    <div class="container-bottom">
+    <div class="devtools">
+        <h1>Learn how to use the DevTools console</h1>
+        <p>Simply just go to F12 and go to console, then type "sum(number,number)" and see what happens! (where it says number type two numbers. example: "sum(2,2)")</p>
+    </div>
+
+        <div class="we">
+            <h1>Yes, yes. All very nice but... Who are behind this?</h1>
+            <p>CodespaceMPT was created by two users, We are ArgentyCityzen, a teenage Argentinian coder and software developer, and Ninjalandia, a teenage American-Mexican coder. We met on PPC Discord’s server. Click the button below to read our wiki.
+            <br><br><button class="readme-tutorial" onclick="wiki()">Learn More about Us</button>
+<script>
+    function wiki() {
+        // Redirect the user to the wiki
+        const wiki = 'https://github.com/ninjalandia/CodespaceMPT/wiki/CodespaceMPT';
+
+        // Open the URL in a new tab
+        window.open(wiki, '_blank');
+    }
+</script></p>
+        </div>
+</div>
+    <br>
+</body>
+</html>
+

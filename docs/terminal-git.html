@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unified Git Management Terminal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+       body {
+            background-color: rgba(0,0,0,0);
+            color: #0f0;
+            font-family: 'Arial', monospace;
+            margin: 0;
+            padding: 0;
+        }
+
+        .terminal-container {
+            width: 460px;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: rgba(0, 0, 0, 0); /* Full transparency */
+            border: 2px solid #0f0;
+            padding: 10px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            height: 300px;
+            color: #0f0;
+        }
+
+        .input-cmd {
+            width: 460px;
+            margin: 10px auto;
+            background-color: rgba(0, 0, 0, 0); /* Full transparency */
+            padding: 10px;
+            white-space: pre-wrap;
+            color: #0f0;
+            border: 2px solid #0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-cmd input {
+            width: 440px;
+            max-width: 580px;
+            background-color: rgba(0, 0, 0, 0); /* Fulltransparency */
+            padding: 10px;
+            color: #0f0;
+            border: none;
+            outline: none;
+            font-family: 'Arial', monospace;
+        }
+
+        #watermark {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container" id="terminal">
+        <p>Type "help" for a list of commands.</p>
+    </div>
+    <div class="input-cmd">
+        <input type="text" id="input-cmd" placeholder="Type your command here..." autofocus>
+    </div>
+    <div id="watermark">Powered by CodespaceMPT.</div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const inputCmd = document.getElementById('input-cmd');
+        let lastFetchedFile = {
+            content: null,
+            path: null
+        };
+
+        inputCmd.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                const command = inputCmd.value.trim();
+                inputCmd.value = '';
+                executeCommand(command);
+            }
+        });
+
+        function executeCommand(command) {
+            const [cmd, ...args] = command.split(' ');
+            const user = args[0];
+            const repo = args[1];
+            const dest = args[2];
+
+            switch(cmd.toLowerCase()) {
+                case 'github':
+                    log(`Executing GitHub command with user: ${user} and repo: ${repo}`);
+                    fetchGitHubRepo(user, repo);
+                    break;
+                case 'gitlab':
+                    log(`Executing GitLab command with user: ${user} and repo: ${repo}`);
+                    fetchGitLabRepo(user, repo);
+                    break;
+                case 'githubfile':
+                    log(`Executing GitHubFile command with user: ${user}, repo: ${repo}, and destination: ${dest}`);
+                    fetchGitHubFile(user, repo, dest);
+                    break;
+                case 'gitlabfile':
+                    log(`Executing GitLabFile command with user: ${user}, repo: ${repo}, and destination: ${dest}`);
+                    fetchGitLabFile(user, repo, dest);
+                    break;
+                case 'savefile':
+                    log(`Saving last fetched file as ${user}`);
+                    saveToFile(user);
+                    break;
+                case 'help':
+                    log('Available commands:');
+                    log('github [username] [repo] - Get contents of repository from GitHub');
+                    log('gitlab [username] [repo] - Get contents of GitLab repository');
+                    log('githubfile [username] [repo] [file path] - Get contents of GitHub file');
+                    log('gitlabfile [username] [repo] [file path] - Get contents of GitLab file');
+                    log('savefile [filename] - Save the contents of the last fetched file to a local file');
+                    break;
+                default:
+                    log(`Unknown command: ${cmd}`);
+            }
+        }
+
+        function log(message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            terminal.appendChild(p);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function fetchGitHubRepo(user, repo) {
+            const url = `https://api.github.com/repos/${user}/${repo}/contents`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        log(`Contents of ${repo}:`);
+                        data.forEach(item => {
+                            log(`- ${item.name} (${item.type})`);
+                        });
+                    } else {
+                        log('Error fetching repository contents.');
+                    }
+                })
+                .catch(error => {
+                    log(`Error: ${error.message}`);
+                });
+        }
+
+        function fetchGitHubFile(user, repo, path) {
+            const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.content) {
+                        const content = atob(data.content);
+                        lastFetchedFile = { content, path };
+                        log(`Contents of ${path}:`);
+                        log(content);
+                    } else {
+                        log('Error fetching file contents.');
+                    }
+                })
+                .catch(error => {
+                    log(`Error: ${error.message}`);
+                });
+        }
+
+        function fetchGitLabRepo(user, repo) {
+            const url = `https://gitlab.com/api/v4/projects/${encodeURIComponent(user + '/' + repo)}/repository/tree`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        log(`Contents of ${repo}:`);
+                        data.forEach(item => {
+                            log(`- ${item.name} (${item.type})`);
+                        });
+                    } else {
+                        log('Error fetching repository contents.');
+                    }
+                })
+                .catch(error => {
+                    log(`Error: ${error.message}`);
+                });
+        }
+
+        function fetchGitLabFile(user, repo, path) {
+            const url = `https://gitlab.com/api/v4/projects/${encodeURIComponent(user + '/' + repo)}/repository/files/${encodeURIComponent(path)}/raw`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    lastFetchedFile = { content: data, path };
+                    log(`Contents of ${path}:`);
+                    log(data);
+                })
+                .catch(error => {
+                    log(`Error: ${error.message}`);
+                });
+        }
+
+        function saveToFile(filename) {
+            if (lastFetchedFile.content) {
+                const blob = new Blob([lastFetchedFile.content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                log(`File saved as ${filename}`);
+            } else {
+                log('No file content to save.');
+            }
+        }
+    </script>
+</body>
+</html>

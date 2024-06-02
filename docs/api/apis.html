@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Code Viewer</title>
+    <link rel="icon" type="image/png" href="image.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        a {
+            text-decoration: none;
+            color: #0da308;
+            margin-right: 30px;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .hidden {
+            display: none;
+        }
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-top: 20px;
+        }
+        .copy-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>API Keys</h1>
+<p>These are embeds and code for things like our terminal or our Python IDE Compiler. Try them out!</p>
+   
+    <a href="console-logging.json" target="_blank">Console Logging [Test]</a>
+    <a href="#" id="show-markdown-editor">Show Markdown Editor Code</a>
+    <a href="#" id="show-git-terminal">Show Git Terminal Code</a>
+    <a href="#" id="show-python-ide">Show Python IDE Code</a>
+    <a href="console-logging.json" target="_blank"></a>
+
+    <div id="code-container" class="hidden">
+        <pre id="code-block">```
+        // Your code goes here
+        console.log("Hello, world!");
+        ```</pre>
+        <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+    </div>
+
+    <div id="markdown-editor-container" class="hidden">
+        <pre id="markdown-editor-code"><code>&lt;iframe src="markdown-editor.html" style="width: 100%; height: 500px;"&gt;&lt;/iframe&gt;</code></pre>
+        <button class="copy-btn" onclick="copyMarkdownCode()">Copy Code</button>
+    </div>
+
+    <div id="git-terminal-container" class="hidden">
+        <pre id="git-terminal-code"><code>&lt;iframe src="terminal-git.html" style="width: 500px; height: 500px; border: rgba(0,0,0,0); display: block;"&gt;&lt;/iframe&gt;</code></pre>
+        <button class="copy-btn" onclick="copyGitTerminalCode()">Copy Code</button>
+    </div>
+
+    <div id="python-ide-container" class="hidden">
+        <pre id="python-ide-code"><code>&lt;iframe src="pythonide.html" style="width: 100%; height: 500px;"&gt;&lt;/iframe&gt;</code></pre>
+        <button class="copy-btn" onclick="copyPythonIDECode()">Copy Code</button>
+    </div>
+
+    <script>
+        document.querySelector('a[href="console-logging.json"]').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.open(this.href);
+        });
+
+        document.getElementById('show-markdown-editor').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('markdown-editor-container').classList.toggle('hidden');
+        });
+
+        document.getElementById('show-git-terminal').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('git-terminal-container').classList.toggle('hidden');
+        });
+
+        document.getElementById('show-python-ide').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('python-ide-container').classList.toggle('hidden');
+        });
+
+        function copyCode() {
+            copyToClipboard('code-block');
+        }
+
+        function copyMarkdownCode() {
+            copyToClipboard('markdown-editor-code');
+        }
+
+        function copyGitTerminalCode() {
+            copyToClipboard('git-terminal-code');
+        }
+
+        function copyPythonIDECode() {
+            copyToClipboard('python-ide-code');
+        }
+
+        function copyToClipboard(elementId) {
+            const codeBlock = document.getElementById(elementId).innerText;
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = codeBlock;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextarea);
+            alert('Code copied to clipboard');
+        }
+    </script>
+</body>
+</html>
+

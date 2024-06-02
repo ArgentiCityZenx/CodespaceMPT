@@ -1,0 +1,2 @@
+console.log("This is evidence that our APIs work. Go to our APIs section to see this code snippet behind the scenes.")
+console.error("Errors can draw attention to humans and you can put random things here so that devs will see it.")

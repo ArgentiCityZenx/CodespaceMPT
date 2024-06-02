@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Site Tester</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .editor-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        .editor {
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 16px;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab-container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .tab-container img {
+            height: 16px;
+            width: 16px;
+            margin-right: 10px;
+        }
+        iframe {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HTML Site Tester</h1>
+        <div class="button-container">
+            <button onclick="addHtmlTemplate()">Get HTML:5 Template</button>
+        </div>
+        <div class="editor-container">
+            <h3>HTML Code</h3>
+            <textarea id="htmlEditor" class="editor"></textarea>
+        </div>
+        <div class="tab-container" id="tabContainer">
+            <span id="tabTitle">Title: </span>
+            <img id="tabIcon" src="favicon.png" alt="favicon">
+        </div>
+        <iframe id="outputFrame"></iframe>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"></script>
+    <script>
+        const htmlEditor = CodeMirror.fromTextArea(document.getElementById('htmlEditor'), {
+            mode: 'text/html',
+            theme: 'dracula',
+            lineNumbers: true
+        });
+
+        htmlEditor.on('change', updatePreview);
+
+        function addHtmlTemplate() {
+            const template = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+</body>
+</html>`;
+            htmlEditor.setValue(template);
+        }
+
+        function updatePreview() {
+            const outputFrame = document.getElementById('outputFrame');
+            const htmlCode = htmlEditor.getValue();
+            outputFrame.srcdoc = htmlCode;
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlCode, 'text/html');
+            const title = doc.querySelector('title') ? doc.querySelector('title').innerText : 'No Title';
+
+            // Check if a favicon is specified in the HTML code
+            const faviconLink = doc.querySelector('link[rel="icon"][type="image/png"]');
+            if (faviconLink) {
+                const faviconSrc = faviconLink.getAttribute('href');
+                document.getElementById('tabIcon').src = faviconSrc;
+            }
+
+            document.getElementById('tabTitle').innerText = `Title: ${title}`;
+        }
+    </script>
+</body>
+</html>
