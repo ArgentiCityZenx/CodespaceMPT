@@ -58,6 +58,7 @@
     <a href="#" id="show-git-terminal">Show Git Terminal Code</a>
     <a href="#" id="show-termix-terminal">TermiX System Terminal Code</a>
     <a href="#" id="show-python-ide">Show Python IDE Code</a>
+    <a href="#" id="show-html">Show HTML Site Tester Code</a>
     <a href="console-logging.json" target="_blank"></a>
 
     <div id="code-container" class="hidden">
@@ -88,6 +89,11 @@
         <button class="copy-btn" onclick="copyPythonIDECode()">Copy Code</button>
     </div>
 
+    <div id="html-container" class="hidden">
+        <pre id="html-tester-code"><code>&lt;iframe src="https://argenticityzenx.github.io/CodespaceMPT/testsites.html" style="width: 500px; height: 500px; border: rgba(0,0,0,0); display: block;"&gt;&lt;/iframe&gt;</code></pre>
+        <button class="copy-btn" onclick="copyTestCode()">Copy Code</button>
+    </div>
+
     <script>
         document.querySelector('a[href="console-logging.json"]').addEventListener('click', function(event) {
             event.preventDefault();
@@ -97,6 +103,11 @@
         document.getElementById('show-markdown-editor').addEventListener('click', function(event) {
             event.preventDefault();
             document.getElementById('markdown-editor-container').classList.toggle('hidden');
+        });
+
+        document.getElementById('show-html').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('html-container').classList.toggle('hidden');
         });
 
         document.getElementById('show-git-terminal').addEventListener('click', function(event) {
@@ -115,6 +126,10 @@
         });
 
         function copyCode() {
+            copyToClipboard('code-block');
+        }
+
+        function copyTestCode() {
             copyToClipboard('code-block');
         }
 
