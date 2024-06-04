@@ -157,7 +157,7 @@
     color: white;
     padding: 11px;
     width: 280px;
-    height: 400px;
+    height: 410px;
     position: inherit;
 }
 .exercise {
@@ -210,11 +210,37 @@
 </head>
 <body>
     <script>
-        function sum(a,b)
-        {
-            let result = a + b;
-            alert("The result of the sum is " + result);
-        }
+        function sum(a, b) {
+        let result = a + b;
+        console.log("The result of the sum is " + result);
+    }
+
+    function subtract(a, b) {
+        let result = a - b;
+        console.log("The result of the subtraction is " + result);
+    }
+
+    function multiply(a, b) {
+        let result = a * b;
+        console.log("The result of the multiplication is " + result);
+    }
+
+    function divide(a, b) {
+        let result = a / b;
+        console.log("The result of the division is " + result);
+    }
+
+    function power(a, b) {
+        let result = a ** b;
+        console.log("The result of the power is " + result);
+    }
+
+    let text = "Hello World!";
+
+    function type(text) {
+        console.log(text);
+    }
+
 </script>
     <div id="clock">
         <span id="datetime"></span>
@@ -559,7 +585,10 @@ function starthtml() {
         <h1>Learn how to use the DevTools console</h1>
         <p>Simply just go to F12 and go to console, then type "sum(number,number)" and see what happens! (where it says number type two numbers. example: "sum(2,2)")</p>
     </div>
-
+    <div class="we">
+        <h1>WHAT?! A... Programming Language?</h1>
+        <p>Yes. We created NinjaCityZen. It is a new programming language but you can only try it in our DevTools Console. Some of our commands are: <br><li>type("Hello World!"),<br><li>sum(number, number),<br><li>substract(num, num),<br><li>multiply(num, num),<br><li>divide(num, num),<br><li>power(num, num)</p>
+    </div>
         <div class="we">
             <h1>Yes, yes. All very nice but... Who are behind this?</h1>
             <p>CodespaceMPT was created by two users, We are ArgentyCityzen, a teenage Argentinian coder and software developer, and Ninjalandia, a teenage American-Mexican coder. We met on PPC Discord’s server. Click the button below to read our wiki.
